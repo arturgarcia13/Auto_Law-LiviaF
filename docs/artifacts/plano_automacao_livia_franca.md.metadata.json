@@ -1,0 +1,6 @@
+{
+  "summary": "Plano de implementação completamente revisado com a arquitetura definitiva: LangGraph + FastAPI (Opção B). Inclui: justificativa técnica para a escolha sobre Opção C, arquitetura completa com diagrama Mermaid, stack tecnológica detalhada, grafo de estados LangGraph com TypedDict e nós, integração Langfuse via CallbackHandler com @observe, estrutura de diretórios Python, Docker Compose completo, system prompts do agente, workflows de cada fase (FastAPI + APScheduler), payloads de API Kommo/ZapSign/ADVBOX, estratégia de testes e cronograma de 10-13 dias úteis.",
+  "updatedAt": "2026-08-27T14:24:45.212059800Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "Pipeline de desenvolvimento incremental e orientado a testes (TDD) para o projeto Auto_Law-LiviaF — versão revisada. Nova ordem: (1) estrutura, (2) FastAPI, (3) PostgreSQL+Redis unificado, (4) Langfuse, (5) LangGraph+Gemini com AsyncPostgresSaver desde o dia 1, (6) Evolution API, (7) Kommo, (8) ZapSign, (9) ADVBOX. Cada sprint documenta: docker-compose.local.yml incremental, testes TDD obrigatórios e Definition of Done.",
+  "updatedAt": "2026-08-27T20:04:41.347677900Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

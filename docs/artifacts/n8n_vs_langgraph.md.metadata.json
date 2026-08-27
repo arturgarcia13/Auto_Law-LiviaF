@@ -1,0 +1,6 @@
+{
+  "summary": "Análise técnica comparando n8n vs LangGraph+FastAPI vs abordagem híbrida para o projeto de automação do escritório da Dra. Lívia França. Inclui tabela comparativa com 10 critérios, diagramas Mermaid das 3 arquiteturas, trechos de código LangGraph para o grafo de estados do agente, e recomendação fundamentada com tabela de stack revisada.",
+  "updatedAt": "2026-08-27T14:19:32.902308100Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

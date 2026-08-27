@@ -1,0 +1,34 @@
+# ========================================
+# Web Framework & Async Server
+# ========================================
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+httpx>=0.27.0
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+python-dotenv>=1.0.0
+
+# ========================================
+# Agente de IA & LLM
+# ========================================
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-google-genai>=2.0.0
+langgraph-checkpoint-postgres>=2.0.0
+psycopg[pool]>=3.2.0
+
+# ========================================
+# Observabilidade & Tracing
+# ========================================
+langfuse>=2.36.0
+
+# ========================================
+# Cache, Buffer & Persistência
+# ========================================
+redis[asyncio]>=5.0.0
+
+# ========================================
+# Agendador de Tarefas (Lembretes)
+# ========================================
+apscheduler>=3.10.0
