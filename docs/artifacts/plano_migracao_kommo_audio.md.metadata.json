@@ -1,0 +1,17 @@
+{
+  "artifactUri": "docs/artifacts/plano_migracao_kommo_audio.md",
+  "title": "Plano de Arquitetura & Implementação — Kommo CRM Messaging & Áudio com IA",
+  "summary": "Especificação técnica e plano de execução para migração de mensageria para a API do Kommo CRM, suporte nativo a mensagens de áudio com transcrição via Gemini Flash Multimodal e isolamento temporário das integrações com ZapSign, ADVbox e RAG.",
+  "createdAt": "2026-08-31T14:50:00-03:00",
+  "updatedAt": "2026-08-31T14:50:00-03:00",
+  "status": "proposed",
+  "tags": [
+    "kommo-crm",
+    "whatsapp",
+    "audio-transcription",
+    "gemini-flash",
+    "langgraph",
+    "fastapi",
+    "architecture-plan"
+  ]
+}

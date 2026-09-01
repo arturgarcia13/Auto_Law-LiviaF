@@ -1,0 +1,529 @@
+{
+  "pipeline_id": 14107071,
+  "templates": {
+    "saudacao_inicial": "Olá! Tudo bem? Aqui é do escritório trabalhista da Dra. Lívia França. Para que possamos te ajudar a buscar os seus direitos, me explique melhor o seu caso.",
+    "recepcao": "Olá! tudo bem? Aqui é do escritório trabalhista da Dra. Lívia França.\n\nPara que possamos te ajudar a buscar os seu direitos, me explique melhor o seu caso.\n\nVocê trabalhou quanto tempo sem carteira assinada?",
+    "analise_viabilidade": "Para entender melhor sua situação, me conte: você foi demitido ou pediu demissão? E há quanto tempo saiu da empresa?",
+    "solicitar_documentos": "Olá, como está? Você conseguiu separar os documentos que te informei para darmos continuidade ao seu caso? Se possível, me envie o quanto antes para que possamos dar prioridade ao seu atendimento.",
+    "cobrando_documentacao": "Olá, como está?\n\nVocê conseguiu separar os documentos que te informei para darmos continuidade ao seu caso?\n\nSe possível, me envie o quanto antes para que possamos dar prioridade ao seu atendimento e avançar com os próximos passos.\n\nVocê consegue me enviar os documentos ainda hoje? 😊\n\n\n\n",
+    "lead_qualificado": "Com base nas informações que você me passou, seu caso tem viabilidade jurídica para buscarmos seus direitos.",
+    "oferta_contrato": "Nosso trabalho é no modelo de êxito (você só paga honorários se e quando receber seus valores ao final do processo). Gostaria que enviássemos o contrato e procuração?",
+    "explicacao_contrato": "Nosso contrato funciona assim: não há cobrança inicial. Nosso percentual de honorários é cobrado apenas sobre o valor que você efetivamente receber ao final da ação.",
+    "envio_contrato": "Perfeito! Já compilei todas as informações do seu caso. A Dra. Lívia França e nossa equipe jurídica irão enviar seu contrato e procuração agora para formalizarmos o início.",
+    "caso_inviavel": "Analisamos atentamente o seu relato. Infelizmente, pelas regras da legislação trabalhista e prazos legais, não identificamos viabilidade jurídica para mover uma ação no momento. Agradecemos muito o seu contato e ficamos à disposição!",
+    "transbordo_humano": "Entendido! Para tratar com o devido cuidado e atenção a esse detalhe específico, estou transferindo seu atendimento para um de nossos advogados especialistas. Em instantes falaremos com você por aqui.",
+    "escritorio": "Nosso escritório físico fica localizado no endereço: R. 14, 03 - Jereissati I, Maracanaú - CE, 61900-270. Mas atendemos clientes de todo o Brasil de forma digital para maior comodidade e agilidade no atendimento. Podemos lhe ajudar por aqui também, para uma maior comodidade para você... ou se preferir, podemos agendar um horário para o atendimento presencial no nosso escritório\n",
+    "follow_up_01": "Oi! Tudo bem? Lembrei de você e daquela situação trabalhista que conversamos.\n\nQueria saber se você conseguiu resolver essa questão ou se ainda ficou alguma coisa pendente. \n\nQuer me contar como ficou? \n\nAinda precisa de ajuda?\n\n\n",
+    "follow_up_02": "Oi! Passando rapidinho porque lembrei do seu caso esses dias e fiquei curioso para saber como ficou.\n\nVocê conseguiu resolver aquela situação com a empresa e receber o que tinha direito ou ainda não?\n\n",
+    "follow_up_03": "Oi, tudo bem? Só queria retomar nosso contato para saber se você conseguiu dar andamento naquela questão trabalhista. \n\nSe ainda não resolveu, podemos conversar novamente e ver com calma o que pode ser feito. \n\nVocê ainda precisa de ajuda com isso?\n\n",
+    "follow_up_04": "Oi, Vi aqui nossa conversa e não queria deixar seu caso parado sem saber se você conseguiu resolver. \n\nSe ainda estiver com aquela situação pendente, podemos retomar de onde paramos e analisar tudo direitinho. \n\nComo ficou essa situação para você?\n\n\n\n",
+    "follow_up_05": "Oi! Como você não respondeu mais às nossas mensagens, acredito que tenha conseguido resolver sua situação e receber os direitos trabalhistas que eram devidos. \n\nDe toda forma, se ainda tiver alguma dúvida ou perceber que ficou algum direito para trás, pode contar com a gente. Nosso contato fica à sua disposição sempre que precisar.\n\nFoi um prazer te atender! Salve nosso número para, caso precise, falar com a gente novamente. \n\nPosso deixar seu atendimento encerrado por aqui?\n\n\n",
+    "veio_de_qual_canal": "Olá! Para nos ajudar a melhorar nosso atendimento, poderia nos informar como conheceu o nosso escritório?\n1️⃣ Indicação de cliente ou conhecido\n2️⃣ Instagram\n3️⃣ Facebook\n4️⃣ Google\n5️⃣ TikTok\n6️⃣ Outro — qual?\nAgradecemos pela informação! \n",
+    "resumo_do_trabalho": "\n\n· Data de entrada:\n\n· Data de saída:\n\n· Função:\n\n· Salário:\n\n· Dias trabalhados:\n\n· Dias de folga:\n\n· Horário de trabalho:\n\n· Intervalo:\n\n· Carteira assinada:\n\n· Data de assinatura:\n\n· Insalubridade/periculosidade:\n\n· Horas extras:\n\n· Comissão:\n\n· Benefícios:\n\n· 13º salário:\n\n· Férias:\n\n· FGTS:\n\n· Filhos menores:\n\n\n",
+    "solicitacao_de_documentos": "Ok! \n\nVamos precisar então de alguns documentos necessários para poder dar entrada na sua ação e buscar os seus direitos! \n\nPor favor, me envie seu CPF ou RG e o Comprovante de endereço  (não precisa ser no seu nome) para preenchermos sua procuração para dar entrada na ação.\n\n\n\n",
+    "seus_direitos_avulso": "Com base nas informações que você nos passou até o momento, identificamos alguns direitos que podem ser analisados no seu caso.\n\nEntre eles, podem estar:\n\n• Reconhecimento do vínculo de emprego;\n• Férias + 1/3;\n• 13º salário;\n• Aviso-prévio;\n• FGTS;\n• Multa de 40% do FGTS, quando aplicável;\n• Horas extras;\n• Intervalos não concedidos corretamente;\n• Adicional de insalubridade ou periculosidade, quando cabível;\n• Outras verbas decorrentes do contrato de trabalho.\n\nPodemos buscar os direitos que você tem para receber?\n",
+    "explicacao_do_contrato_de_honorarios": "Nosso contrato é bem simples e transparente: você não paga nada para começar.\n\nAo final do processo, se houver algum valor recebido por você, cobramos 30% de honorários sobre o que você receber + R$ 300,00 referentes às despesas operacionais e diligências.\n\nSe não houver nenhum resultado financeiro para você, não há honorários de êxito a pagar.\n\nTudo fica explicado no contrato, para você ter segurança e tranquilidade desde o início. \n\nPosso te enviar o contrato para assinatura e darmos andamento?\n\n\n",
+    "assinatura_de_contrato": "Olá! Segue o link para assinatura digital da procuração e do contrato de honorários:\n\nÉ só acessar o link e seguir o passo a passo indicado. A assinatura pode ser realizada diretamente pelo celular.\n",
+    "processo_protocolado": "Tudo certo! Já registramos todas as informações necessárias e encaminhamos o caso para o nosso setor jurídico.\nA equipe dará continuidade à elaboração e ao protocolo da ação.\nAssim que o processo for protocolado, entraremos em contato para informar.\nCaso seja necessário esclarecer alguma informação sobre o seu período de trabalho ou os fatos relatados, entraremos em contato novamente.\n",
+    "nao_comparecimento_audiencia": "Prezado(a), verificamos que você não compareceu à audiência designada em seu processo trabalhista e não apresentou justificativa.\nEm razão do não comparecimento, o processo foi arquivado.\nConforme previsto na Cláusula 3.11 do contrato de honorários, o não comparecimento injustificado à audiência poderá gerar a cobrança dos honorários previstos contratualmente, correspondentes a 15% do valor da causa, em razão do trabalho técnico e jurídico já realizado.\n",
+    "carta_de_testemunha": "Segue a carta de testemunha.\nPor favor, imprima o documento e peça para a testemunha preencher os dados solicitados e assinar.\nDepois, envie uma foto legível do documento preenchido e assinado por aqui.\n",
+    "avaliacao": "Sua avaliação é importante para nós, então se você acha que nosso atendimento vale 5 estrelas, clique nesse link: https://g.page/r/CdKS6OYRTCONEAE/review Agradecemos a sua avaliação! \n",
+    "instagram": "siga-nos nas redes sociais! https://www.instagram.com/liviafrancaadvocacia?igsh=ODc1bHoxeXM2d2px\n"
+  },
+  "raw_templates": [
+    {
+      "id": 27528,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Recepção",
+      "content": "Olá! tudo bem? Aqui é do escritório trabalhista da Dra. Lívia França.\n\nPara que possamos te ajudar a buscar os seu direitos, me explique melhor o seu caso.\n\nVocê trabalhou quanto tempo sem carteira assinada?",
+      "created_at": 1784135793,
+      "updated_at": 1784135793,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/27528?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68652,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Veio de qual canal?",
+      "content": "Olá! Para nos ajudar a melhorar nosso atendimento, poderia nos informar como conheceu o nosso escritório?\n1️⃣ Indicação de cliente ou conhecido\n2️⃣ Instagram\n3️⃣ Facebook\n4️⃣ Google\n5️⃣ TikTok\n6️⃣ Outro — qual?\nAgradecemos pela informação! \n",
+      "created_at": 1787056910,
+      "updated_at": 1787057431,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68652?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68656,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Resumo do trabalho",
+      "content": "\n\n· Data de entrada:\n\n· Data de saída:\n\n· Função:\n\n· Salário:\n\n· Dias trabalhados:\n\n· Dias de folga:\n\n· Horário de trabalho:\n\n· Intervalo:\n\n· Carteira assinada:\n\n· Data de assinatura:\n\n· Insalubridade/periculosidade:\n\n· Horas extras:\n\n· Comissão:\n\n· Benefícios:\n\n· 13º salário:\n\n· Férias:\n\n· FGTS:\n\n· Filhos menores:\n\n\n",
+      "created_at": 1787056995,
+      "updated_at": 1787056995,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68656?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68658,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Solicitação de Documentos ",
+      "content": "Ok! \n\nVamos precisar então de alguns documentos necessários para poder dar entrada na sua ação e buscar os seus direitos! \n\nPor favor, me envie seu CPF ou RG e o Comprovante de endereço  (não precisa ser no seu nome) para preenchermos sua procuração para dar entrada na ação.\n\n\n\n",
+      "created_at": 1787057052,
+      "updated_at": 1787061304,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68658?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68660,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Seus Direitos / avulso",
+      "content": "Com base nas informações que você nos passou até o momento, identificamos alguns direitos que podem ser analisados no seu caso.\n\nEntre eles, podem estar:\n\n• Reconhecimento do vínculo de emprego;\n• Férias + 1/3;\n• 13º salário;\n• Aviso-prévio;\n• FGTS;\n• Multa de 40% do FGTS, quando aplicável;\n• Horas extras;\n• Intervalos não concedidos corretamente;\n• Adicional de insalubridade ou periculosidade, quando cabível;\n• Outras verbas decorrentes do contrato de trabalho.\n\nPodemos buscar os direitos que você tem para receber?\n",
+      "created_at": 1787057132,
+      "updated_at": 1787063090,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68660?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68662,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Explicação do Contrato de Honorários",
+      "content": "Nosso contrato é bem simples e transparente: você não paga nada para começar.\n\nAo final do processo, se houver algum valor recebido por você, cobramos 30% de honorários sobre o que você receber + R$ 300,00 referentes às despesas operacionais e diligências.\n\nSe não houver nenhum resultado financeiro para você, não há honorários de êxito a pagar.\n\nTudo fica explicado no contrato, para você ter segurança e tranquilidade desde o início. \n\nPosso te enviar o contrato para assinatura e darmos andamento?\n\n\n",
+      "created_at": 1787057198,
+      "updated_at": 1787063068,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68662?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68664,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Assinatura de Contrato",
+      "content": "Olá! Segue o link para assinatura digital da procuração e do contrato de honorários:\n\nÉ só acessar o link e seguir o passo a passo indicado. A assinatura pode ser realizada diretamente pelo celular.\n",
+      "created_at": 1787057232,
+      "updated_at": 1787057232,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68664?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68666,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Processo protocolado",
+      "content": "Tudo certo! Já registramos todas as informações necessárias e encaminhamos o caso para o nosso setor jurídico.\nA equipe dará continuidade à elaboração e ao protocolo da ação.\nAssim que o processo for protocolado, entraremos em contato para informar.\nCaso seja necessário esclarecer alguma informação sobre o seu período de trabalho ou os fatos relatados, entraremos em contato novamente.\n",
+      "created_at": 1787057290,
+      "updated_at": 1787057290,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68666?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68668,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Não comparecimento audiência",
+      "content": "Prezado(a), verificamos que você não compareceu à audiência designada em seu processo trabalhista e não apresentou justificativa.\nEm razão do não comparecimento, o processo foi arquivado.\nConforme previsto na Cláusula 3.11 do contrato de honorários, o não comparecimento injustificado à audiência poderá gerar a cobrança dos honorários previstos contratualmente, correspondentes a 15% do valor da causa, em razão do trabalho técnico e jurídico já realizado.\n",
+      "created_at": 1787057346,
+      "updated_at": 1787057346,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68668?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68670,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Carta de testemunha",
+      "content": "Segue a carta de testemunha.\nPor favor, imprima o documento e peça para a testemunha preencher os dados solicitados e assinar.\nDepois, envie uma foto legível do documento preenchido e assinado por aqui.\n",
+      "created_at": 1787057367,
+      "updated_at": 1787057367,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68670?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68672,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Avaliação",
+      "content": "Sua avaliação é importante para nós, então se você acha que nosso atendimento vale 5 estrelas, clique nesse link: https://g.page/r/CdKS6OYRTCONEAE/review Agradecemos a sua avaliação! \n",
+      "created_at": 1787057567,
+      "updated_at": 1787057567,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68672?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68674,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Instagram",
+      "content": "siga-nos nas redes sociais! https://www.instagram.com/liviafrancaadvocacia?igsh=ODc1bHoxeXM2d2px\n",
+      "created_at": 1787057600,
+      "updated_at": 1787057600,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68674?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68676,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Escritório",
+      "content": "Nosso escritório físico fica localizado no endereço: R. 14, 03 - Jereissati I, Maracanaú - CE, 61900-270. Mas atendemos clientes de todo o Brasil de forma digital para maior comodidade e agilidade no atendimento. Podemos lhe ajudar por aqui também, para uma maior comodidade para você... ou se preferir, podemos agendar um horário para o atendimento presencial no nosso escritório\n",
+      "created_at": 1787057618,
+      "updated_at": 1787057618,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68676?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68706,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Cobrando Documentação",
+      "content": "Olá, como está?\n\nVocê conseguiu separar os documentos que te informei para darmos continuidade ao seu caso?\n\nSe possível, me envie o quanto antes para que possamos dar prioridade ao seu atendimento e avançar com os próximos passos.\n\nVocê consegue me enviar os documentos ainda hoje? 😊\n\n\n\n",
+      "created_at": 1787062342,
+      "updated_at": 1787062342,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68706?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68720,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Follow UP 01 ",
+      "content": "Oi! Tudo bem? Lembrei de você e daquela situação trabalhista que conversamos.\n\nQueria saber se você conseguiu resolver essa questão ou se ainda ficou alguma coisa pendente. \n\nQuer me contar como ficou? \n\nAinda precisa de ajuda?\n\n\n",
+      "created_at": 1787064091,
+      "updated_at": 1787142774,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68720?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68722,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Follow UP 02",
+      "content": "Oi! Passando rapidinho porque lembrei do seu caso esses dias e fiquei curioso para saber como ficou.\n\nVocê conseguiu resolver aquela situação com a empresa e receber o que tinha direito ou ainda não?\n\n",
+      "created_at": 1787064148,
+      "updated_at": 1787144329,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68722?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68724,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Follow UP 03",
+      "content": "Oi, tudo bem? Só queria retomar nosso contato para saber se você conseguiu dar andamento naquela questão trabalhista. \n\nSe ainda não resolveu, podemos conversar novamente e ver com calma o que pode ser feito. \n\nVocê ainda precisa de ajuda com isso?\n\n",
+      "created_at": 1787064250,
+      "updated_at": 1787147680,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68724?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68738,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Follow UP 04",
+      "content": "Oi, Vi aqui nossa conversa e não queria deixar seu caso parado sem saber se você conseguiu resolver. \n\nSe ainda estiver com aquela situação pendente, podemos retomar de onde paramos e analisar tudo direitinho. \n\nComo ficou essa situação para você?\n\n\n\n",
+      "created_at": 1787065251,
+      "updated_at": 1787144363,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68738?page=1&limit=250"
+        }
+      }
+    },
+    {
+      "id": 68740,
+      "type": "amocrm",
+      "account_id": 36730375,
+      "name": "Follow UP 05",
+      "content": "Oi! Como você não respondeu mais às nossas mensagens, acredito que tenha conseguido resolver sua situação e receber os direitos trabalhistas que eram devidos. \n\nDe toda forma, se ainda tiver alguma dúvida ou perceber que ficou algum direito para trás, pode contar com a gente. Nosso contato fica à sua disposição sempre que precisar.\n\nFoi um prazer te atender! Salve nosso número para, caso precise, falar com a gente novamente. \n\nPosso deixar seu atendimento encerrado por aqui?\n\n\n",
+      "created_at": 1787065287,
+      "updated_at": 1787142982,
+      "buttons": [],
+      "attachment": null,
+      "is_editable": true,
+      "external_id": null,
+      "waba_footer": null,
+      "waba_category": null,
+      "waba_template_type": null,
+      "waba_template_body": null,
+      "waba_language": null,
+      "waba_examples": null,
+      "waba_header": null,
+      "waba_header_type": null,
+      "_links": {
+        "self": {
+          "href": "https://liviafranaadv.kommo.com/api/v4/chats/templates/68740?page=1&limit=250"
+        }
+      }
+    }
+  ]
+}

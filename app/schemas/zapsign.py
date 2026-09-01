@@ -1,12 +1,23 @@
-"""Schemas de validação para payloads e webhooks da ZapSign."""
+"""DEPRECATED / ISOLADO: Schemas de validação para payloads e webhooks da ZapSign.
 
+Este módulo está temporariamente isolado conforme as diretrizes da migração do escritório
+para foco em Triagem, Qualificação e Transbordo no Kommo CRM.
+"""
+
+import warnings
 from typing import Any
 
 from pydantic import BaseModel, Field
 
+warnings.warn(
+    "app.schemas.zapsign está isolado e não deve ser referenciado no fluxo principal.",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
 
 class ZapSignSigner(BaseModel):
-    """Signatário do documento ZapSign."""
+    """Signatário do documento ZapSign (Isolado)."""
 
     token: str
     name: str
@@ -16,7 +27,7 @@ class ZapSignSigner(BaseModel):
 
 
 class ZapSignDocument(BaseModel):
-    """Informações do documento emitido na ZapSign."""
+    """Informações do documento emitido na ZapSign (Isolado)."""
 
     token: str
     name: str
@@ -25,7 +36,7 @@ class ZapSignDocument(BaseModel):
 
 
 class ZapSignWebhookPayload(BaseModel):
-    """Payload recebido via webhook quando ocorrem eventos no documento."""
+    """Payload recebido via webhook quando ocorrem eventos no documento (Isolado)."""
 
     event_type: str | None = Field(default=None, alias="event")
     document: ZapSignDocument | dict[str, Any] | None = None

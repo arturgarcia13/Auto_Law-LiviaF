@@ -1,0 +1,17 @@
+{
+  "artifactUri": "docs/artifacts/plano_funil_vendas_kommo.md",
+  "title": "Plano de Arquitetura & Implementação — Pipeline 'FUNIL DE VENDAS' (Dra. Lívia França)",
+  "summary": "Mapeamento das 5 etapas da pipeline FUNIL DE VENDAS (ID: 14107071) do Kommo CRM: Leads de Entrada, Análise de Viabilidade Trabalhista, Lead Qualificado, Oferta de Contrato e Envio do Contrato com entrada do humano, além do resgate de modelos de chat via Kommo API.",
+  "createdAt": "2026-08-31T15:14:00-03:00",
+  "updatedAt": "2026-08-31T15:14:00-03:00",
+  "status": "proposed",
+  "tags": [
+    "kommo-crm",
+    "pipeline-14107071",
+    "funil-de-vendas",
+    "direito-trabalhista",
+    "chat-templates",
+    "langgraph",
+    "fastapi"
+  ]
+}

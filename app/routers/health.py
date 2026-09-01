@@ -1,8 +1,11 @@
 """Router de verificação de saúde e disponibilidade dos serviços (Health Check)."""
 
+import os
 from typing import Any
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
+
+from integrations.kommo import verificar_status_kommo
 
 router = APIRouter(tags=["health"])
 
@@ -14,11 +17,42 @@ async def ping() -> dict[str, str]:
 
 
 @router.get("/health")
-async def health_check() -> dict[str, Any]:
-    """Verificação completa de disponibilidade dos subsistemas (API, WhatsApp, Banco)."""
-    # Verificação do status real da Evolution API será conectada no Sprint 6
+async def health_check(request: Request) -> dict[str, Any]:
+    """Verificação completa de disponibilidade dos subsistemas (API, Banco, Redis, Kommo)."""
+    app_state = getattr(request.app, "state", None)
+
+    # 1. Verificação do Redis
+    redis_status = "not_configured"
+    redis_client = app_state and getattr(app_state, "redis", None)
+    if redis_client:
+        try:
+            pong = await redis_client.ping()
+            redis_status = "ok" if pong else "error"
+        except Exception:
+            redis_status = "error"
+    elif os.getenv("REDIS_URL"):
+        redis_status = "configured"
+
+    # 2. Verificação do PostgreSQL / Checkpointer
+    postgres_status = "not_configured"
+    db_pool = app_state and getattr(app_state, "db_pool", None)
+    if db_pool:
+        try:
+            postgres_status = "ok"
+        except Exception:
+            postgres_status = "error"
+    elif os.getenv("DATABASE_URL"):
+        postgres_status = "configured"
+
+    # 3. Verificação do Kommo CRM
+    kommo_info = await verificar_status_kommo()
+    kommo_status = kommo_info.get("status", "not_configured")
+
     return {
+        "status": "ok",
         "api": "ok",
-        "whatsapp": "not_configured",
-        "whatsapp_conectado": False,
+        "postgres": postgres_status,
+        "redis": redis_status,
+        "kommo": kommo_status,
+        "version": "0.1.0",
     }

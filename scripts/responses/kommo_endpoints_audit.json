@@ -1,0 +1,1501 @@
+{
+  "subdomain": "liviafranaadv",
+  "base_url": "https://liviafranaadv.kommo.com/api/v4",
+  "endpoints": {
+    "account": {
+      "endpoint": "/account?with=amojo_id,version",
+      "metodo": "GET",
+      "url": "https://liviafranaadv.kommo.com/api/v4/account?with=amojo_id,version",
+      "status_http": 200,
+      "response": {
+        "id": 36730375,
+        "name": "Livia França Adv",
+        "subdomain": "liviafranaadv",
+        "language": "pt",
+        "created_at": 1788220914,
+        "created_by": 0,
+        "updated_at": 1788220914,
+        "updated_by": 0,
+        "current_user_id": 15583323,
+        "country": "BR",
+        "currency": "BRL",
+        "currency_symbol": "R$",
+        "customers_mode": "disabled",
+        "is_unsorted_on": true,
+        "mobile_feature_version": 0,
+        "is_loss_reason_enabled": true,
+        "is_helpbot_enabled": false,
+        "is_technical_account": false,
+        "contact_name_display_order": 1,
+        "amojo_id": "92b3ef67-f093-4804-96a8-9afd02fbcf62",
+        "version": 16,
+        "_links": {
+          "self": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/account"
+          }
+        }
+      }
+    },
+    "pipelines": {
+      "endpoint": "/leads/pipelines",
+      "metodo": "GET",
+      "url": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines",
+      "status_http": 200,
+      "response": {
+        "_total_items": 4,
+        "_links": {
+          "self": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines"
+          }
+        },
+        "_embedded": {
+          "pipelines": [
+            {
+              "id": 14107071,
+              "name": "Funil de vendas",
+              "sort": 1,
+              "is_main": true,
+              "is_unsorted_on": true,
+              "is_archive": false,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071"
+                }
+              },
+              "_embedded": {
+                "statuses": [
+                  {
+                    "id": 108897143,
+                    "name": "Etapa de leads de entrada",
+                    "sort": 10,
+                    "is_editable": false,
+                    "pipeline_id": 14107071,
+                    "color": "#c1c1c1",
+                    "type": 1,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/108897143"
+                      }
+                    }
+                  },
+                  {
+                    "id": 108897147,
+                    "name": "Análise de Viabilidade",
+                    "sort": 20,
+                    "is_editable": true,
+                    "pipeline_id": 14107071,
+                    "color": "#99ccff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/108897147"
+                      }
+                    }
+                  },
+                  {
+                    "id": 108897151,
+                    "name": "Lead Qualificado",
+                    "sort": 30,
+                    "is_editable": true,
+                    "pipeline_id": 14107071,
+                    "color": "#ffff99",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/108897151"
+                      }
+                    }
+                  },
+                  {
+                    "id": 108897155,
+                    "name": "Oferta de Contrato",
+                    "sort": 40,
+                    "is_editable": true,
+                    "pipeline_id": 14107071,
+                    "color": "#ffcc66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/108897155"
+                      }
+                    }
+                  },
+                  {
+                    "id": 108897159,
+                    "name": "Envio do Contrato",
+                    "sort": 50,
+                    "is_editable": true,
+                    "pipeline_id": 14107071,
+                    "color": "#ffcccc",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/108897159"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109018727,
+                    "name": "Follow Up",
+                    "sort": 60,
+                    "is_editable": true,
+                    "pipeline_id": 14107071,
+                    "color": "#f9deff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/109018727"
+                      }
+                    }
+                  },
+                  {
+                    "id": 142,
+                    "name": "Contrato Fechado ",
+                    "sort": 10000,
+                    "is_editable": false,
+                    "pipeline_id": 14107071,
+                    "color": "#CCFF66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/142"
+                      }
+                    }
+                  },
+                  {
+                    "id": 143,
+                    "name": "Lead - perdido",
+                    "sort": 11000,
+                    "is_editable": false,
+                    "pipeline_id": 14107071,
+                    "color": "#D5D8DB",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14107071/statuses/143"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 14122251,
+              "name": "Follow-Up",
+              "sort": 2,
+              "is_main": false,
+              "is_unsorted_on": true,
+              "is_archive": false,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251"
+                }
+              },
+              "_embedded": {
+                "statuses": [
+                  {
+                    "id": 109017463,
+                    "name": "Etapa de leads de entrada",
+                    "sort": 10,
+                    "is_editable": false,
+                    "pipeline_id": 14122251,
+                    "color": "#c1c1c1",
+                    "type": 1,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109017463"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017467,
+                    "name": "D1 ",
+                    "sort": 20,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#99ccff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109017467"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017471,
+                    "name": "D3",
+                    "sort": 30,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#ffff99",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109017471"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017475,
+                    "name": "D7",
+                    "sort": 40,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#ffcc66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109017475"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109019499,
+                    "name": "D15",
+                    "sort": 50,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#f9deff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109019499"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109019503,
+                    "name": "D20",
+                    "sort": 60,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#f9deff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109019503"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109019507,
+                    "name": "D25",
+                    "sort": 70,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#f9deff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109019507"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109019511,
+                    "name": "D30",
+                    "sort": 80,
+                    "is_editable": true,
+                    "pipeline_id": 14122251,
+                    "color": "#f9deff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/109019511"
+                      }
+                    }
+                  },
+                  {
+                    "id": 142,
+                    "name": "Venda ganha",
+                    "sort": 10000,
+                    "is_editable": false,
+                    "pipeline_id": 14122251,
+                    "color": "#CCFF66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/142"
+                      }
+                    }
+                  },
+                  {
+                    "id": 143,
+                    "name": "Venda perdida",
+                    "sort": 11000,
+                    "is_editable": false,
+                    "pipeline_id": 14122251,
+                    "color": "#D5D8DB",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122251/statuses/143"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 14122259,
+              "name": "Interno ",
+              "sort": 3,
+              "is_main": false,
+              "is_unsorted_on": true,
+              "is_archive": false,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259"
+                }
+              },
+              "_embedded": {
+                "statuses": [
+                  {
+                    "id": 109017519,
+                    "name": "Etapa de leads de entrada",
+                    "sort": 10,
+                    "is_editable": false,
+                    "pipeline_id": 14122259,
+                    "color": "#c1c1c1",
+                    "type": 1,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259/statuses/109017519"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017523,
+                    "name": "Contato inicial",
+                    "sort": 20,
+                    "is_editable": true,
+                    "pipeline_id": 14122259,
+                    "color": "#99ccff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259/statuses/109017523"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017527,
+                    "name": "Oferta feita",
+                    "sort": 30,
+                    "is_editable": true,
+                    "pipeline_id": 14122259,
+                    "color": "#ffff99",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259/statuses/109017527"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017531,
+                    "name": "Negociação",
+                    "sort": 40,
+                    "is_editable": true,
+                    "pipeline_id": 14122259,
+                    "color": "#ffcc66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259/statuses/109017531"
+                      }
+                    }
+                  },
+                  {
+                    "id": 142,
+                    "name": "Venda ganha",
+                    "sort": 10000,
+                    "is_editable": false,
+                    "pipeline_id": 14122259,
+                    "color": "#CCFF66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259/statuses/142"
+                      }
+                    }
+                  },
+                  {
+                    "id": 143,
+                    "name": "Venda perdida",
+                    "sort": 11000,
+                    "is_editable": false,
+                    "pipeline_id": 14122259,
+                    "color": "#D5D8DB",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122259/statuses/143"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 14122271,
+              "name": "Atendimento Cliente",
+              "sort": 4,
+              "is_main": false,
+              "is_unsorted_on": true,
+              "is_archive": false,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271"
+                }
+              },
+              "_embedded": {
+                "statuses": [
+                  {
+                    "id": 109017575,
+                    "name": "Etapa de leads de entrada",
+                    "sort": 10,
+                    "is_editable": false,
+                    "pipeline_id": 14122271,
+                    "color": "#c1c1c1",
+                    "type": 1,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/109017575"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017579,
+                    "name": "Análise Viabilidade",
+                    "sort": 20,
+                    "is_editable": true,
+                    "pipeline_id": 14122271,
+                    "color": "#99ccff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/109017579"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017583,
+                    "name": "Lead Qualificado",
+                    "sort": 30,
+                    "is_editable": true,
+                    "pipeline_id": 14122271,
+                    "color": "#ffff99",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/109017583"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109017587,
+                    "name": "Oferta Contrato",
+                    "sort": 40,
+                    "is_editable": true,
+                    "pipeline_id": 14122271,
+                    "color": "#ffcc66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/109017587"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109018079,
+                    "name": "Envio Contrato ",
+                    "sort": 50,
+                    "is_editable": true,
+                    "pipeline_id": 14122271,
+                    "color": "#f9deff",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/109018079"
+                      }
+                    }
+                  },
+                  {
+                    "id": 109018083,
+                    "name": "Follow Up ",
+                    "sort": 60,
+                    "is_editable": true,
+                    "pipeline_id": 14122271,
+                    "color": "#ff8f92",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/109018083"
+                      }
+                    }
+                  },
+                  {
+                    "id": 142,
+                    "name": "Contrato Fechado ",
+                    "sort": 10000,
+                    "is_editable": false,
+                    "pipeline_id": 14122271,
+                    "color": "#CCFF66",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/142"
+                      }
+                    }
+                  },
+                  {
+                    "id": 143,
+                    "name": "Venda Perdida",
+                    "sort": 11000,
+                    "is_editable": false,
+                    "pipeline_id": 14122271,
+                    "color": "#D5D8DB",
+                    "type": 0,
+                    "account_id": 36730375,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/pipelines/14122271/statuses/143"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "custom_fields": {
+      "endpoint": "/leads/custom_fields",
+      "metodo": "GET",
+      "url": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields",
+      "status_http": 200,
+      "response": {
+        "_total_items": 12,
+        "_page": 1,
+        "_page_count": 1,
+        "_links": {
+          "self": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields?page=1&limit=250"
+          }
+        },
+        "_embedded": {
+          "custom_fields": [
+            {
+              "id": 1430328,
+              "name": "utm_content",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "UTM_CONTENT",
+              "sort": 12,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430328?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430330,
+              "name": "utm_medium",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "UTM_MEDIUM",
+              "sort": 14,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430330?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430332,
+              "name": "utm_campaign",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "UTM_CAMPAIGN",
+              "sort": 16,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430332?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430334,
+              "name": "utm_source",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "UTM_SOURCE",
+              "sort": 18,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430334?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430336,
+              "name": "utm_term",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "UTM_TERM",
+              "sort": 20,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430336?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430338,
+              "name": "utm_referrer",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "UTM_REFERRER",
+              "sort": 22,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430338?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430340,
+              "name": "referrer",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "REFERRER",
+              "sort": 24,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430340?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430342,
+              "name": "gclientid",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "GCLIENTID",
+              "sort": 26,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430342?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430344,
+              "name": "gclid",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "GCLID",
+              "sort": 28,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430344?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430346,
+              "name": "fbclid",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "FBCLID",
+              "sort": 30,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": false,
+              "is_predefined": true,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430346?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430372,
+              "name": "ttad_id",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "TIKTOK_AD_ID_TD",
+              "sort": 500,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": true,
+              "is_predefined": false,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430372?page=1&limit=250"
+                }
+              }
+            },
+            {
+              "id": 1430374,
+              "name": "ttad_name",
+              "type": "tracking_data",
+              "account_id": 36730375,
+              "code": "TIKTOK_AD_NAME_TD",
+              "sort": 500,
+              "is_api_only": true,
+              "enums": null,
+              "group_id": "statistic",
+              "required_statuses": [],
+              "is_deletable": true,
+              "is_predefined": false,
+              "entity_type": "leads",
+              "tracking_callback": null,
+              "remind": null,
+              "triggers": [],
+              "currency": null,
+              "hidden_statuses": [],
+              "chained_lists": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/custom_fields/1430374?page=1&limit=250"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "leads_recentes": {
+      "endpoint": "/leads?limit=5&with=contacts",
+      "metodo": "GET",
+      "url": "https://liviafranaadv.kommo.com/api/v4/leads?limit=5&with=contacts",
+      "status_http": 200,
+      "response": {
+        "_page": 1,
+        "_links": {
+          "self": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/leads?limit=5&with=contacts&page=1"
+          },
+          "next": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/leads?limit=5&with=contacts&page=2"
+          }
+        },
+        "_embedded": {
+          "leads": [
+            {
+              "id": 7547312,
+              "name": "Lead #7547312",
+              "price": 0,
+              "price_with_minor_units": 0.0,
+              "responsible_user_id": 10149603,
+              "group_id": 0,
+              "status_id": 108897147,
+              "pipeline_id": 14107071,
+              "loss_reason_id": null,
+              "created_by": 0,
+              "updated_by": 0,
+              "created_at": 1783535889,
+              "updated_at": 1783535889,
+              "closed_at": null,
+              "closest_task_at": null,
+              "is_deleted": false,
+              "custom_fields_values": null,
+              "score": null,
+              "account_id": 36730375,
+              "labor_cost": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/7547312?limit=5&with=contacts&page=1"
+                }
+              },
+              "_embedded": {
+                "tags": [],
+                "companies": [],
+                "contacts": [
+                  {
+                    "id": 18993342,
+                    "is_main": true,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/18993342?limit=5&with=contacts&page=1"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7547252,
+              "name": "Lead #7547252",
+              "price": 0,
+              "price_with_minor_units": 0.0,
+              "responsible_user_id": 10149603,
+              "group_id": 0,
+              "status_id": 108897147,
+              "pipeline_id": 14107071,
+              "loss_reason_id": null,
+              "created_by": 0,
+              "updated_by": 0,
+              "created_at": 1783615595,
+              "updated_at": 1783615595,
+              "closed_at": null,
+              "closest_task_at": null,
+              "is_deleted": false,
+              "custom_fields_values": null,
+              "score": null,
+              "account_id": 36730375,
+              "labor_cost": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/7547252?limit=5&with=contacts&page=1"
+                }
+              },
+              "_embedded": {
+                "tags": [],
+                "companies": [],
+                "contacts": [
+                  {
+                    "id": 18993230,
+                    "is_main": true,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/18993230?limit=5&with=contacts&page=1"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7547250,
+              "name": "Lead #7547250",
+              "price": 0,
+              "price_with_minor_units": 0.0,
+              "responsible_user_id": 10149603,
+              "group_id": 0,
+              "status_id": 108897147,
+              "pipeline_id": 14107071,
+              "loss_reason_id": null,
+              "created_by": 0,
+              "updated_by": 0,
+              "created_at": 1783619754,
+              "updated_at": 1783619754,
+              "closed_at": null,
+              "closest_task_at": null,
+              "is_deleted": false,
+              "custom_fields_values": null,
+              "score": null,
+              "account_id": 36730375,
+              "labor_cost": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/7547250?limit=5&with=contacts&page=1"
+                }
+              },
+              "_embedded": {
+                "tags": [],
+                "companies": [],
+                "contacts": [
+                  {
+                    "id": 18993222,
+                    "is_main": true,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/18993222?limit=5&with=contacts&page=1"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7547294,
+              "name": "Lead #7547294",
+              "price": 0,
+              "price_with_minor_units": 0.0,
+              "responsible_user_id": 10149603,
+              "group_id": 0,
+              "status_id": 108897147,
+              "pipeline_id": 14107071,
+              "loss_reason_id": null,
+              "created_by": 0,
+              "updated_by": 0,
+              "created_at": 1783726843,
+              "updated_at": 1784024627,
+              "closed_at": null,
+              "closest_task_at": null,
+              "is_deleted": false,
+              "custom_fields_values": null,
+              "score": null,
+              "account_id": 36730375,
+              "labor_cost": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/7547294?limit=5&with=contacts&page=1"
+                }
+              },
+              "_embedded": {
+                "tags": [],
+                "companies": [],
+                "contacts": [
+                  {
+                    "id": 18993314,
+                    "is_main": true,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/18993314?limit=5&with=contacts&page=1"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 8334920,
+              "name": "Lead #8334920",
+              "price": 0,
+              "price_with_minor_units": 0.0,
+              "responsible_user_id": 10149603,
+              "group_id": 0,
+              "status_id": 143,
+              "pipeline_id": 14122259,
+              "loss_reason_id": 37844499,
+              "created_by": 0,
+              "updated_by": 15583323,
+              "created_at": 1784127171,
+              "updated_at": 1784139876,
+              "closed_at": 1784139876,
+              "closest_task_at": null,
+              "is_deleted": false,
+              "custom_fields_values": null,
+              "score": null,
+              "account_id": 36730375,
+              "labor_cost": null,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/8334920?limit=5&with=contacts&page=1"
+                }
+              },
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": 75802,
+                    "name": "Sem Interesse",
+                    "color": null
+                  }
+                ],
+                "companies": [],
+                "contacts": [
+                  {
+                    "id": 21395494,
+                    "is_main": true,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/21395494?limit=5&with=contacts&page=1"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "talks_recentes": {
+      "endpoint": "/talks?limit=5",
+      "metodo": "GET",
+      "url": "https://liviafranaadv.kommo.com/api/v4/talks?limit=5",
+      "status_http": 200,
+      "response": {
+        "_total_items": 5,
+        "_embedded": {
+          "talks": [
+            {
+              "talk_id": 439,
+              "created_at": 1788205746,
+              "updated_at": 1788209439,
+              "rate": 0,
+              "contact_id": 43680556,
+              "chat_id": "5520658f-3626-4c5c-b212-83c479ad6218",
+              "entity_id": 20429066,
+              "entity_type": "lead",
+              "status": "in_work",
+              "is_in_work": true,
+              "is_read": false,
+              "origin": "waba",
+              "source_id": 45530,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/talks/439?limit=5&page=1"
+                }
+              },
+              "_embedded": {
+                "contacts": [
+                  {
+                    "id": 43680556,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/43680556?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "leads": [
+                  {
+                    "id": 20429066,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/20429066?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "customers": []
+              }
+            },
+            {
+              "talk_id": 438,
+              "created_at": 1788199384,
+              "updated_at": 1788202222,
+              "rate": 0,
+              "contact_id": 44135208,
+              "chat_id": "be6c36d0-5636-4070-bbc3-e59dbeefb94f",
+              "entity_id": 20747036,
+              "entity_type": "lead",
+              "status": "in_work",
+              "is_in_work": true,
+              "is_read": false,
+              "origin": "waba",
+              "source_id": 45530,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/talks/438?limit=5&page=1"
+                }
+              },
+              "_embedded": {
+                "contacts": [
+                  {
+                    "id": 44135208,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/44135208?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "leads": [
+                  {
+                    "id": 20747036,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/20747036?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "customers": []
+              }
+            },
+            {
+              "talk_id": 437,
+              "created_at": 1788193061,
+              "updated_at": 1788193064,
+              "rate": 0,
+              "contact_id": 44125434,
+              "chat_id": "1bf6c5cb-b1ac-48ed-b80c-f5c7cc7753d7",
+              "entity_id": 20738154,
+              "entity_type": "lead",
+              "status": "in_work",
+              "is_in_work": true,
+              "is_read": true,
+              "origin": "waba",
+              "source_id": 45530,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/talks/437?limit=5&page=1"
+                }
+              },
+              "_embedded": {
+                "contacts": [
+                  {
+                    "id": 44125434,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/44125434?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "leads": [
+                  {
+                    "id": 20738154,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/20738154?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "customers": []
+              }
+            },
+            {
+              "talk_id": 436,
+              "created_at": 1788192535,
+              "updated_at": 1788195574,
+              "rate": 0,
+              "contact_id": 44124526,
+              "chat_id": "1caee5eb-6b12-4134-a8c0-fbf8b9a002e3",
+              "entity_id": 20737380,
+              "entity_type": "lead",
+              "status": "in_work",
+              "is_in_work": true,
+              "is_read": true,
+              "origin": "waba",
+              "source_id": 45530,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/talks/436?limit=5&page=1"
+                }
+              },
+              "_embedded": {
+                "contacts": [
+                  {
+                    "id": 44124526,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/44124526?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "leads": [
+                  {
+                    "id": 20737380,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/20737380?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "customers": []
+              }
+            },
+            {
+              "talk_id": 435,
+              "created_at": 1788191090,
+              "updated_at": 1788196753,
+              "rate": 0,
+              "contact_id": 44119818,
+              "chat_id": "81ee2660-7b3a-4ecc-999a-6bbfc4eb71ec",
+              "entity_id": 20735526,
+              "entity_type": "lead",
+              "status": "in_work",
+              "is_in_work": true,
+              "is_read": true,
+              "origin": "waba",
+              "source_id": 45530,
+              "account_id": 36730375,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/talks/435?limit=5&page=1"
+                }
+              },
+              "_embedded": {
+                "contacts": [
+                  {
+                    "id": 44119818,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/contacts/44119818?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "leads": [
+                  {
+                    "id": 20735526,
+                    "_links": {
+                      "self": {
+                        "href": "https://liviafranaadv.kommo.com/api/v4/leads/20735526?limit=5&page=1"
+                      }
+                    }
+                  }
+                ],
+                "customers": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    "talk_439": {
+      "endpoint": "/talks/439",
+      "metodo": "GET",
+      "url": "https://liviafranaadv.kommo.com/api/v4/talks/439",
+      "status_http": 200,
+      "response": {
+        "talk_id": 439,
+        "created_at": 1788205746,
+        "updated_at": 1788209439,
+        "rate": 0,
+        "contact_id": 43680556,
+        "chat_id": "5520658f-3626-4c5c-b212-83c479ad6218",
+        "entity_id": 20429066,
+        "entity_type": "lead",
+        "status": "in_work",
+        "is_in_work": true,
+        "is_read": false,
+        "origin": "waba",
+        "source_id": 45530,
+        "account_id": 36730375,
+        "_links": {
+          "self": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/talks/439"
+          }
+        },
+        "_embedded": {
+          "contacts": [
+            {
+              "id": 43680556,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/contacts/43680556"
+                }
+              }
+            }
+          ],
+          "leads": [
+            {
+              "id": 20429066,
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/20429066"
+                }
+              }
+            }
+          ],
+          "customers": []
+        }
+      }
+    },
+    "send_message_talk_439": {
+      "endpoint": "/talks/439/send_message",
+      "metodo": "POST",
+      "url": "https://liviafranaadv.kommo.com/api/v4/talks/439/send_message",
+      "status_http": 403,
+      "response": {
+        "title": "Forbidden",
+        "type": "https://httpstatus.es/403",
+        "status": 403,
+        "detail": "Invalid scope"
+      }
+    },
+    "criar_nota_lead_20429066": {
+      "endpoint": "/leads/20429066/notes",
+      "metodo": "POST",
+      "url": "https://liviafranaadv.kommo.com/api/v4/leads/20429066/notes",
+      "status_http": 200,
+      "response": {
+        "_links": {
+          "self": {
+            "href": "https://liviafranaadv.kommo.com/api/v4/leads/20429066/notes"
+          }
+        },
+        "_embedded": {
+          "notes": [
+            {
+              "id": 3579234,
+              "entity_id": 20429066,
+              "request_id": "0",
+              "_links": {
+                "self": {
+                  "href": "https://liviafranaadv.kommo.com/api/v4/leads/20429066/notes/3579234"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
