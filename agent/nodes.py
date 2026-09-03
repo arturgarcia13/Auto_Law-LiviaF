@@ -2,8 +2,11 @@
 
 import logging
 import os
+import zoneinfo
+from datetime import datetime
 from typing import Any
 
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
@@ -17,6 +20,44 @@ from agent.state import (
 from integrations.kommo import atualizar_lead, criar_nota, criar_tarefa
 
 logger = logging.getLogger(__name__)
+
+load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
+
+DIAS_SEMANA = [
+    "segunda-feira",
+    "terça-feira",
+    "quarta-feira",
+    "quinta-feira",
+    "sexta-feira",
+    "sábado",
+    "domingo",
+]
+MESES = [
+    "janeiro",
+    "fevereiro",
+    "março",
+    "abril",
+    "maio",
+    "junho",
+    "julho",
+    "agosto",
+    "setembro",
+    "outubro",
+    "novembro",
+    "dezembro",
+]
+
+
+def formatar_data_brasil(dt: datetime | None = None) -> str:
+    """Formata a data/hora atual no padrão brasileiro e fuso horário oficial (Brasília)."""
+    try:
+        tz = zoneinfo.ZoneInfo("America/Sao_Paulo")
+    except Exception:
+        tz = None
+    now = dt or datetime.now(tz=tz)
+    dia_semana = DIAS_SEMANA[now.weekday()]
+    mes = MESES[now.month - 1]
+    return f"{dia_semana}, {now.day:02d} de {mes} de {now.year}, às {now.strftime('%H:%M')}"
 
 
 def _get_gemini_client() -> genai.Client | None:
@@ -99,12 +140,27 @@ async def analise_viabilidade_node(state: LeadState) -> dict[str, Any]:
                 "🤖 [CHAMANDO GEMINI FLASH] Enviando histórico de %d mensagens...",
                 len(historico_conteudos),
             )
+            agora_str = formatar_data_brasil()
+            instrucao_sistema = (
+                f"{SYSTEM_PROMPT_LIVIA_FRANCA}\n\n"
+                f"================================================================================\n"
+                f"INFORMAÇÃO TEMPORAL ATUAL & REGRAS DE PLACEHOLDERS (CRÍTICO)\n"
+                f"================================================================================\n"
+                f"Data e hora atual no Brasil: {agora_str}.\n\n"
+                f"REGRAS OBRIGATÓRIAS:\n"
+                f"1. É TERMINANTEMENTE PROIBIDO emitir placeholders entre colchetes, como "
+                f"'[inserir data de hoje]', '[data]', '[horário]' ou quaisquer colchetes [ ].\n"
+                f"2. Utilize sempre a data e horário reais informados ({agora_str}) para "
+                f"análise de prazos, prescrição ou menções temporais ao cliente.\n"
+                f"3. Responda com a mensagem definitiva, completa e pronta para envio ao cliente."
+            )
             config = types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT_LIVIA_FRANCA,
+                system_instruction=instrucao_sistema,
                 temperature=0.4,
             )
+            model_name = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
             response = client.models.generate_content(
-                model="gemini-3.5-flash-lite",
+                model=model_name,
                 contents=historico_conteudos,
                 config=config,
             )

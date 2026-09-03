@@ -6,6 +6,7 @@ from typing import Any
 from fastapi import APIRouter, Request
 
 from integrations.kommo import verificar_status_kommo
+from integrations.meta import verificar_status_meta
 
 router = APIRouter(tags=["health"])
 
@@ -18,7 +19,7 @@ async def ping() -> dict[str, str]:
 
 @router.get("/health")
 async def health_check(request: Request) -> dict[str, Any]:
-    """Verificação completa de disponibilidade dos subsistemas (API, Banco, Redis, Kommo)."""
+    """Verificação completa de disponibilidade dos subsistemas (API, Banco, Redis, Kommo, Meta)."""
     app_state = getattr(request.app, "state", None)
 
     # 1. Verificação do Redis
@@ -48,11 +49,17 @@ async def health_check(request: Request) -> dict[str, Any]:
     kommo_info = await verificar_status_kommo()
     kommo_status = kommo_info.get("status", "not_configured")
 
+    # 4. Verificação da Meta WhatsApp Cloud API
+    meta_info = await verificar_status_meta()
+    meta_status = meta_info.get("status", "not_configured")
+
     return {
         "status": "ok",
         "api": "ok",
         "postgres": postgres_status,
         "redis": redis_status,
         "kommo": kommo_status,
-        "version": "0.1.0",
+        "meta": meta_status,
+        "version": "0.2.0",
     }
+

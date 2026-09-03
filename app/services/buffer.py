@@ -32,15 +32,19 @@ async def agrupar_mensagens(
 
     key = f"buffer:msg:{telefone}"
     try:
-        await _redis_client.rpush(key, nova_mensagem)
-        await _redis_client.expire(key, int(janela_segundos + 5))
-        if janela_segundos > 0:
-            await asyncio.sleep(janela_segundos)
-        mensagens = await _redis_client.lrange(key, 0, -1)
-        if mensagens:
-            await _redis_client.delete(key)
-            decoded = [m.decode("utf-8") if isinstance(m, bytes) else str(m) for m in mensagens]
-            return " \n ".join(decoded)
+        async with asyncio.timeout(0.8):
+            await _redis_client.rpush(key, nova_mensagem)
+            await _redis_client.expire(key, int(janela_segundos + 5))
+            if janela_segundos > 0:
+                await asyncio.sleep(janela_segundos)
+            mensagens = await _redis_client.lrange(key, 0, -1)
+            if mensagens:
+                await _redis_client.delete(key)
+                decoded = [
+                    m.decode("utf-8") if isinstance(m, bytes) else str(m)
+                    for m in mensagens
+                ]
+                return " \n ".join(decoded)
     except Exception:
         pass
     return nova_mensagem

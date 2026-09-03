@@ -1,8 +1,88 @@
 """Schemas de validação Pydantic v2 para payloads e webhooks do Kommo CRM."""
 
+import os
+import re
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
+
+
+def normalize_phone(raw: str | None) -> str | None:
+    """Normaliza o número de telefone extraindo apenas dígitos e garantindo o DDI 55."""
+    if not raw:
+        return None
+    digits = re.sub(r"\D", "", str(raw))
+    if not digits:
+        return None
+    if digits.startswith("55") and len(digits) >= 12:
+        return digits
+    if len(digits) >= 10:
+        return f"55{digits}"
+    return digits
+
+
+def is_phone_allowed(phone: str | None) -> bool:
+    """Verifica se o telefone está na lista de permissão (ALLOWED_PHONES).
+
+    Se ALLOWED_PHONES não estiver configurada no ambiente (ou for '*' ou vazia),
+    permite todos os números (modo produção).
+    Se configurada (ex: ALLOWED_PHONES=5585984347149,558596967995),
+    apenas os números listados serão aceitos.
+    """
+    allowed_env = (os.getenv("ALLOWED_PHONES") or "").strip()
+    if not allowed_env or allowed_env == "*":
+        return True
+
+    normalized_target = normalize_phone(phone)
+    if not normalized_target:
+        return False
+
+    allowed_list = [normalize_phone(x.strip()) for x in allowed_env.split(",") if x.strip()]
+    return normalized_target in [x for x in allowed_list if x]
+
+
+def is_chat_allowed(chat_id: str | int | None) -> bool:
+    """Verifica se o chat_id está explicitamente na lista de permissão ALLOWED_CHAT_ID(S)."""
+    if not chat_id:
+        return False
+    env_str = f"{os.getenv('ALLOWED_CHAT_IDS', '')},{os.getenv('ALLOWED_CHAT_ID', '')}".strip(",")
+    if not env_str:
+        return False
+    allowed_set = {c.strip() for c in env_str.split(",") if c.strip()}
+    return str(chat_id).strip() in allowed_set
+
+
+def is_allowed(
+    chat_id: str | int | None = None,
+    phone: str | None = None,
+    lead_id: str | int | None = None,
+) -> bool:
+    """Valida se o evento de teste está permitido via ALLOWED_CHAT_ID(S) ou ALLOWED_PHONES."""
+    if chat_id and is_chat_allowed(chat_id):
+        return True
+    if lead_id and is_chat_allowed(str(lead_id)):
+        return True
+    if phone and is_phone_allowed(phone):
+        return True
+
+    # Se nenhuma das restrições foi configurada no .env, opera em modo aberto
+    has_chat_env = bool(
+        (os.getenv("ALLOWED_CHAT_IDS") or os.getenv("ALLOWED_CHAT_ID") or "").strip()
+    )
+    has_phone_env = bool((os.getenv("ALLOWED_PHONES") or "").strip())
+    if not has_chat_env and not has_phone_env:
+        return True
+
+    return False
+
+
+def is_chat_permitido(
+    chat_id: str | int | None = None,
+    talk_id: str | int | None = None,
+    telefone: str | None = None,
+) -> bool:
+    """Helper de compatibilidade retrocompatível."""
+    return is_allowed(chat_id=chat_id, phone=telefone)
 
 
 class KommoMessageContent(BaseModel):
@@ -91,14 +171,18 @@ class KommoLead(BaseModel):
 
 
 class KommoMessagePayload(BaseModel):
-    """Payload de evento de mensagem recebida via Kommo Chats / Talks API."""
+    """Payload de evento de mensagem recebida via Kommo CRM."""
 
     model_config = ConfigDict(extra="ignore")
 
     event_type: str = Field(default="new_message", description="Tipo do evento de mensageria")
-    chat_id: str | None = Field(default=None, description="ID da conversa no Kommo Talks")
+    message_id: str | None = Field(
+        default=None, description="ID único da mensagem no Kommo CRM"
+    )
+    chat_id: str | None = Field(default=None, description="ID da conversa no Kommo")
     talk_id: str | int | None = Field(default=None, description="ID do talk associado")
     lead_id: str | int | None = Field(default=None, description="ID do lead associado no CRM")
+    contact_id: str | int | None = Field(default=None, description="ID do contato associado no CRM")
     sender: KommoSender | None = Field(default=None, description="Remetente da mensagem")
     message: KommoMessageContent = Field(
         default_factory=KommoMessageContent, description="Conteúdo textual ou mídia da mensagem"
@@ -108,9 +192,10 @@ class KommoMessagePayload(BaseModel):
 
     @property
     def telefone_normalizado(self) -> str:
-        """Extrai apenas os dígitos numéricos do telefone do lead."""
+        """Extrai o telefone normalizado com DDI."""
         raw = self.phone or (self.sender.phone if self.sender else "") or ""
-        return "".join(c for c in raw if c.isdigit())
+        normalized = normalize_phone(raw)
+        return normalized or ""
 
     @property
     def e_audio(self) -> bool:
@@ -153,32 +238,3 @@ class KommoWebhookPayload(BaseModel):
     messages: list[KommoMessagePayload] | None = Field(
         default=None, description="Lista de eventos de mensagem recebidos"
     )
-
-
-def is_chat_permitido(
-    chat_id: str | int | None = None,
-    talk_id: str | int | None = None,
-    telefone: str | None = None,
-) -> bool:
-    """Verifica se o chat_id, talk_id ou telefone está na lista de permissão (whitelist).
-
-    Se ALLOWED_CHAT_IDS não estiver configurada no ambiente (ou for '*' ou vazia),
-    permite todos os chats (modo produção).
-    Se configurada (ex: ALLOWED_CHAT_IDS=20429066 ou ALLOWED_CHAT_IDS=20429066,20429067),
-    apenas os identificadores listados serão processados.
-    """
-    import os
-
-    allowed_env = (os.getenv("ALLOWED_CHAT_IDS") or "").strip()
-    if not allowed_env or allowed_env == "*":
-        return True
-
-    allowed_set = {x.strip() for x in allowed_env.split(",") if x.strip()}
-
-    candidatos = [
-        str(chat_id).strip() if chat_id is not None else "",
-        str(talk_id).strip() if talk_id is not None else "",
-        str(telefone).strip() if telefone is not None else "",
-    ]
-    return any(c in allowed_set for c in candidatos if c)
-

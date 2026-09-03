@@ -4,6 +4,16 @@ from typing import Any
 
 import pytest
 
+from app.services.deduplication import deduplicator
+
+
+@pytest.fixture(autouse=True)
+def reset_deduplicator() -> Any:
+    """Limpa o cache de deduplicação antes e após cada teste para garantir isolamento."""
+    deduplicator.clear()
+    yield
+    deduplicator.clear()
+
 
 @pytest.fixture
 def mock_kommo_text_payload() -> dict[str, Any]:

@@ -10,7 +10,7 @@ from app.main import app
 
 @pytest.mark.asyncio
 async def test_root_retorna_200() -> None:
-    """Verifica se a rota raiz responde com status 200 e informações da aplicação."""
+    """Verifica se a rota raiz responde com status 200 e allowed_phones."""
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         response = await client.get("/")
@@ -18,6 +18,8 @@ async def test_root_retorna_200() -> None:
         data = response.json()
         assert data["status"] == "running"
         assert "Auto Law" in data["app"]
+        assert "allowed_phones" in data
+        assert data["version"] == "0.2.0"
 
 
 @pytest.mark.asyncio
@@ -43,19 +45,27 @@ async def test_health_check_estrutura_completa() -> None:
         assert "postgres" in data
         assert "redis" in data
         assert "kommo" in data
-        assert data["version"] == "0.1.0"
+        assert "meta" in data
+        assert data["version"] == "0.2.0"
 
 
 @pytest.mark.asyncio
 async def test_health_check_com_servicos_conectados() -> None:
-    """Verifica resposta do /health com Redis e Kommo simulando conexão ativa."""
+    """Verifica resposta do /health com Redis, Kommo e Meta simulando conexão ativa."""
     mock_redis = AsyncMock()
     mock_redis.ping.return_value = True
 
-    with patch(
-        "app.routers.health.verificar_status_kommo",
-        new_callable=AsyncMock,
-        return_value={"status": "ok", "subdomain": "liviafranaadv", "conectado": True},
+    with (
+        patch(
+            "app.routers.health.verificar_status_kommo",
+            new_callable=AsyncMock,
+            return_value={"status": "ok", "subdomain": "liviafranaadv", "conectado": True},
+        ),
+        patch(
+            "app.routers.health.verificar_status_meta",
+            new_callable=AsyncMock,
+            return_value={"status": "ok", "conectado": True},
+        ),
     ):
         # Injeta mock de redis no estado da app para teste
         app.state.redis = mock_redis
@@ -66,3 +76,4 @@ async def test_health_check_com_servicos_conectados() -> None:
             data = response.json()
             assert data["redis"] == "ok"
             assert data["kommo"] == "ok"
+            assert data["meta"] == "ok"

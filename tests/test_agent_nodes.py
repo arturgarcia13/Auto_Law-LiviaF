@@ -39,7 +39,6 @@ from agent.tools import (
     aceitar_oferta_contrato,
     acionar_transbordo,
     atualizar_kommo,
-    gerar_contrato_zapsign,
     gerar_ficha_oficial,
     iniciar_coleta,
     qualificar_lead,
@@ -351,8 +350,6 @@ def test_tools_atualizar_kommo_e_transbordo() -> None:
     res_coleta = iniciar_coleta.invoke({"motivo_qualificacao": "Viabilidade ok"})
     assert res_coleta["status"] == "qualificado"
 
-    res_zap = gerar_contrato_zapsign.invoke({"dados_contrato": {"nome": "Teste"}})
-    assert res_zap["status"] == "contrato_solicitado"
 
 
 # ==============================================================================

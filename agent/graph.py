@@ -21,6 +21,11 @@ try:
 except (ImportError, Exception):  # pragma: no cover
     AsyncPostgresSaver = None  # type: ignore
 
+try:
+    from langgraph.checkpoint.sqlite import SqliteSaver
+except (ImportError, Exception):  # pragma: no cover
+    SqliteSaver = None  # type: ignore
+
 
 def roteador_fases(state: LeadState) -> str:
     """Determina o ponto de entrada ou a próxima transição lógica a partir do estado atual."""

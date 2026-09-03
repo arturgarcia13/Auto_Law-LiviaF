@@ -61,3 +61,8 @@ pgdata_local/
 evolution_instances/
 evolution_instances_local/
 caddy_data/
+
+# Local SQLite databases
+data/*.sqlite*
+data/*.db
+

@@ -1,7 +1,8 @@
 """Definição do estado conversacional do agente (StateGraph TypedDict)."""
 
-from typing import Any, Literal
+from typing import Annotated, Any, Literal
 
+from langgraph.graph.message import add_messages
 from typing_extensions import TypedDict
 
 FaseLead = Literal[
@@ -45,7 +46,7 @@ class FichaTrabalhista(TypedDict, total=False):
 class LeadState(TypedDict, total=False):
     """Estrutura de dados persistida pelo LangGraph para cada conversa de lead."""
 
-    messages: list[Any]
+    messages: Annotated[list[Any], add_messages]
     telefone: str
     nome_cliente: str | None
     lead_id: str | int | None
@@ -60,11 +61,6 @@ class LeadState(TypedDict, total=False):
 
     # Campos complementares e retrocompatibilidade
     dados_triagem: dict[str, Any]
-    dados_contrato: dict[str, Any]
-    zapsign_doc_token: str | None
-    zapsign_sign_url: str | None
-    advbox_customer_id: str | None
-    advbox_lawsuit_id: str | None
     motivo_transbordo: str | None
 
 

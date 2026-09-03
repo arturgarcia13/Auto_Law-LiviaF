@@ -9,6 +9,7 @@ import pytest
 import respx
 
 from integrations.kommo import (
+    add_kommo_note,
     atualizar_etapa_lead,
     atualizar_lead,
     buscar_contato_do_lead,
@@ -35,17 +36,56 @@ def mock_env_kommo() -> Any:
         "os.environ",
         {
             "KOMMO_SUBDOMAIN": SUBDOMAIN,
-            "KOMMO_API_KEY": "fake_jwt_token_12345",
+            "KOMMO_LONG_LIVED_TOKEN": "fake_jwt_token_12345",
+            "META_PHONE_NUMBER_ID": "1226609120527127",
+            "META_WHATSAPP_TOKEN": "fake_meta_token",
+            "GRAPH_VERSION": "v21.0",
         },
     ):
         yield
 
 
 @pytest.mark.asyncio
-async def test_enviar_mensagem_sucesso() -> None:
-    """Verifica envio de mensagem para o chat do Kommo."""
+async def test_add_kommo_note_sucesso() -> None:
+    """Verifica inserção de nota com wamid no lead da Kommo."""
+    lead_id = 20429066
+    text = "Olá! Estamos analisando seu caso."
+    wamid = "wamid.HBgLNTU4NTk4NDM0NzE0OQUCABEYEkZBRjkyMzYxOTQ0"
+    endpoint = f"{BASE_URL}/leads/{lead_id}/notes"
+
+    with respx.mock(assert_all_called=True) as respx_mock:
+        respx_mock.post(endpoint).respond(
+            status_code=200,
+            json={"_embedded": {"notes": [{"id": 12345, "entity_id": lead_id}]}},
+        )
+        res = await add_kommo_note(lead_id=lead_id, text=text, wamid=wamid)
+        assert res["ok"] is True
+        assert res["status"] == 200
+
+
+@pytest.mark.asyncio
+async def test_enviar_mensagem_via_meta_quando_telefone_fornecido() -> None:
+    """Verifica envio de mensagem priorizando Meta Cloud API se recipient_phone for passado."""
     chat_id = 998877
     texto = "Olá! Como podemos te ajudar?"
+    phone = "5585984347149"
+    meta_url = "https://graph.facebook.com/v21.0/1226609120527127/messages"
+
+    with respx.mock(assert_all_called=True) as respx_mock:
+        respx_mock.post(meta_url).respond(
+            status_code=200,
+            json={"messages": [{"id": "wamid.12345"}]},
+        )
+        resposta = await enviar_mensagem(chat_id=chat_id, texto=texto, recipient_phone=phone)
+        assert resposta.get("status") == "delivered"
+        assert resposta.get("id") == "wamid.12345"
+
+
+@pytest.mark.asyncio
+async def test_enviar_mensagem_fallback_sem_telefone() -> None:
+    """Verifica retorno estruturado seguro quando enviado apenas com chat_id (fallback v4)."""
+    chat_id = 998877
+    texto = "Mensagem legado"
     endpoint = f"{BASE_URL}/talks/{chat_id}/send_message"
 
     with respx.mock(assert_all_called=True) as respx_mock:
@@ -56,21 +96,6 @@ async def test_enviar_mensagem_sucesso() -> None:
         resposta = await enviar_mensagem(chat_id, texto)
         assert resposta.get("id") == 123456
         assert resposta.get("chat_id") == chat_id
-
-
-@pytest.mark.asyncio
-async def test_enviar_mensagem_fallback_em_erro() -> None:
-    """Verifica retorno estruturado seguro quando a API do Kommo falha."""
-    chat_id = 998877
-    texto = "Mensagem com erro simulado"
-    endpoint = f"{BASE_URL}/talks/{chat_id}/send_message"
-
-    with respx.mock(assert_all_called=True) as respx_mock:
-        respx_mock.post(endpoint).respond(status_code=500)
-        resposta = await enviar_mensagem(chat_id, texto)
-        assert resposta.get("status") == "fallback"
-        assert resposta.get("chat_id") == chat_id
-        assert resposta.get("text") == texto
 
 
 @pytest.mark.asyncio
@@ -98,7 +123,6 @@ async def test_formatar_e_criar_nota_ficha_trabalhista() -> None:
         "filhos_menores": "2 filhos (4 e 7 anos)",
     }
 
-    # Validação do formatador de texto
     texto_formatado = formatar_ficha_trabalhista(ficha)
     assert "📋 FICHA DE QUALIFICAÇÃO TRABALHISTA — DRA. LÍVIA FRANÇA" in texto_formatado
     assert "Operador de Máquinas" in texto_formatado

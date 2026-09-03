@@ -76,8 +76,3 @@ def iniciar_coleta(motivo_qualificacao: str) -> dict[str, Any]:
     """Sinaliza que o lead foi qualificado e autoriza transição para oferta/coleta."""
     return {"status": "qualificado", "motivo": motivo_qualificacao}
 
-
-@tool
-def gerar_contrato_zapsign(dados_contrato: dict[str, Any]) -> dict[str, Any]:
-    """Aciona a emissão de contrato e procuração na ZapSign."""
-    return {"status": "contrato_solicitado", "dados": dados_contrato}
