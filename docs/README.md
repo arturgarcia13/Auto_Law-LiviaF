@@ -51,27 +51,26 @@ Os artefatos abaixo documentam todas as especificações de requisitos, payloads
   - Resgate dinâmico de modelos de chat via Kommo API (`/api/v4/chats/templates`).
   - Handoff com silenciamento automático do bot e criação de tarefa no Kommo para o advogado enviar o contrato.
 
-### [2. Plano de Arquitetura & Implementação — Kommo CRM Messaging & Áudio com IA](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/plano_migracao_kommo_audio.md)
+### [2. Pipeline & Fases de Desenvolvimento](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/pipeline_desenvolvimento.md) ⭐ **[ROADMAP VIGENTE]**
+* **Arquivo**: `docs/artifacts/pipeline_desenvolvimento.md`
+* **Conteúdo**:
+  - Matriz consolidada das **9 Fases do Projeto** (Fases 1 a 6 Concluídas, Fase 7 de Higienização Concluída, Fases 8 e 9 de Homologação/Observabilidade no Backlog).
+  - Soberania com ChatOllama (`llama3.1:8b`), Meta Cloud API, Kommo CRM e persistência SQLite/Postgres.
+  - Registro de descontinuação definitiva de escopos legados (Evolution API, ZapSign e ADVBOX).
+
+### [3. Arquitetura em 4 Camadas](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/plano_reconstrucao_camadas.md)
+* **Arquivo**: `docs/artifacts/plano_reconstrucao_camadas.md`
+* **Conteúdo**:
+  - Especificação detalhada das 4 camadas ativas: Kommo CRM API v4 (Camada 1), Inteligência Soberana ChatOllama + Gemini STT (Camada 2), Orquestração LangGraph & Persistência (Camada 3) e Gateway FastAPI + Meta Cloud API + Fast ACK (Camada 4).
+
+### [4. Plano de Arquitetura & Implementação — Kommo CRM Messaging & Áudio com IA](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/plano_migracao_kommo_audio.md)
 * **Arquivo**: `docs/artifacts/plano_migracao_kommo_audio.md`
 * **Metadados**: `docs/artifacts/plano_migracao_kommo_audio.md.metadata.json`
 * **Conteúdo**:
-  - Unificação da mensageria via Kommo CRM (Talks / Chats API), eliminando o gateway Evolution API.
+  - Unificação da mensageria via Kommo CRM e Meta Cloud API.
   - Recepção e transcrição de áudios com Google Gemini Flash Multimodal STT.
-  - Isolamento de ZapSign, ADVbox e RAG para fases futuras.
 
-### [2. Plano Geral de Automação Comercial e Contratual](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/plano_automacao_livia_franca.md)
-* **Arquivo**: `docs/artifacts/plano_automacao_livia_franca.md`
-* **Metadados**: `docs/artifacts/plano_automacao_livia_franca.md.metadata.json`
-* **Conteúdo**:
-  - Arquitetura geral e especificações de prompts e integrações originais.
-
-### [3. Pipeline de Desenvolvimento Incremental (TDD)](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/pipeline_desenvolvimento.md)
-* **Arquivo**: `docs/artifacts/pipeline_desenvolvimento.md`
-* **Metadados**: `docs/artifacts/pipeline_desenvolvimento.md.metadata.json`
-* **Conteúdo**:
-  - Roteiro incremental de desenvolvimento guiado por testes unitários e de integração.
-
-### [4. Análise Comparativa: n8n vs. LangGraph](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/n8n_vs_langgraph.md)
+### [5. Análise Comparativa: n8n vs. LangGraph](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/artifacts/n8n_vs_langgraph.md)
 * **Arquivo**: `docs/artifacts/n8n_vs_langgraph.md`
 * **Metadados**: `docs/artifacts/n8n_vs_langgraph.md.metadata.json`
 
@@ -96,4 +95,5 @@ Para entender o racional técnico por trás de cada escolha do projeto, consulte
 13. **[ADR-013](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-013-deduplicacao-idempotencia-fast-ack.md)**: Deduplicação de Mensagens (Idempotência) e Fast ACK para Webhooks.
 14. **[ADR-014](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-014-memoria-langgraph-contexto-temporal.md)**: Persistência de Memória Conversacional e Injeção de Contexto Temporal.
 15. **[ADR-015](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-015-migracao-llm-gemini-para-ollama.md)**: Migração da Camada Conversacional para ChatOllama (Cluster AtLab UFC).
+16. **[ADR-016](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-016-automacao-gestao-webhooks-kommo.md)**: Automação e Auto-Cura de Webhooks na Kommo CRM.
 

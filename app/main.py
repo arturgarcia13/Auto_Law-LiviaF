@@ -13,7 +13,7 @@ from fastapi import FastAPI
 from agent.graph import build_graph
 from app.routers import admin, health, kommo
 from app.services.buffer import set_redis_client
-from app.services.template_manager import TemplateManager
+from app.services.templates import TemplateManager
 
 load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
 

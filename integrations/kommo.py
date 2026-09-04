@@ -52,9 +52,7 @@ def _headers() -> dict[str, str]:
 def formatar_ficha_trabalhista(ficha: dict[str, Any]) -> str:
     """Formata o dicionário da Ficha Trabalhista no texto oficial para a timeline do CRM."""
     insalubridade = ficha.get("insalubridade_periculosidade") or "Não informado"
-    decimo_terceiro = (
-        ficha.get("decimo_terceiro") or ficha.get("13_salario") or "Não informado"
-    )
+    decimo_terceiro = ficha.get("decimo_terceiro") or ficha.get("13_salario") or "Não informado"
     return (
         "📋 FICHA DE QUALIFICAÇÃO TRABALHISTA — DRA. LÍVIA FRANÇA\n\n"
         f"· Data de entrada: {ficha.get('data_entrada') or 'Não informado'}\n"
@@ -390,8 +388,6 @@ async def criar_tarefa(lead_id: str | int, texto: str, prazo_horas: int = 2) -> 
         return True
 
 
-
-
 async def listar_pipelines() -> list[dict[str, Any]]:
     """Consulta a lista de funis e etapas configurados na conta."""
     url = f"{_api_v4_url()}/leads/pipelines"
@@ -425,3 +421,310 @@ async def verificar_status_kommo() -> dict[str, Any]:
             }
     except Exception:
         return {"status": "unreachable", "subdomain": subdomain, "conectado": False}
+
+
+DEFAULT_WEBHOOK_EVENTS: list[str] = ["add_message"]
+
+KOMMO_AVAILABLE_WEBHOOK_EVENTS: dict[str, list[str]] = {
+    "communications": ["add_message", "add_talk", "add_outgoing_message"],
+    "leads": [
+        "add_lead",
+        "update_lead",
+        "status_lead",
+        "delete_lead",
+        "restore_lead",
+        "responsible_lead",
+    ],
+    "contacts": [
+        "add_contact",
+        "update_contact",
+        "delete_contact",
+        "restore_contact",
+        "responsible_contact",
+    ],
+    "companies": [
+        "add_company",
+        "update_company",
+        "delete_company",
+        "restore_company",
+        "responsible_company",
+    ],
+    "tasks": [
+        "add_task",
+        "update_task",
+        "delete_task",
+        "responsible_task",
+    ],
+    "notes": [
+        "note_lead",
+        "note_contact",
+        "note_company",
+    ],
+}
+
+
+async def listar_webhooks(destination: str | None = None) -> list[dict[str, Any]]:
+    """Consulta a lista de webhooks cadastrados na conta Kommo CRM.
+
+    Se destination for especificado, filtra os webhooks retornando apenas o correspondente.
+    """
+    token = _get_api_key()
+    if not token:
+        logger.warning("Token do Kommo não configurado para listar webhooks.")
+        return []
+
+    url = f"{_api_v4_url()}/webhooks"
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.get(url, headers=_headers())
+            if response.status_code == 200:
+                dados = response.json()
+                webhooks: list[dict[str, Any]] = list(
+                    dados.get("_embedded", {}).get("webhooks", [])
+                )
+                if destination:
+                    dest_clean = destination.strip()
+                    return [
+                        w for w in webhooks if str(w.get("destination", "")).strip() == dest_clean
+                    ]
+                return webhooks
+            if response.status_code == 204:
+                return []
+            logger.warning(
+                "Kommo listar_webhooks: status %s: %s",
+                response.status_code,
+                response.text,
+            )
+            return []
+    except Exception as exc:
+        logger.error("Erro na requisição listar_webhooks: %s", exc)
+        return []
+
+
+async def criar_webhook(
+    destination: str,
+    events: list[str] | None = None,
+) -> dict[str, Any]:
+    """Registra uma nova URL de webhook no Kommo CRM com os eventos especificados."""
+    token = _get_api_key()
+    if not token:
+        return {"ok": False, "error": "KOMMO_LONG_LIVED_TOKEN não configurado"}
+
+    url = f"{_api_v4_url()}/webhooks"
+    settings = events if events is not None else DEFAULT_WEBHOOK_EVENTS
+    payload = {
+        "destination": destination.strip(),
+        "settings": settings,
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.post(url, json=payload, headers=_headers())
+            is_ok = response.status_code in (200, 201)
+            try:
+                data = response.json()
+            except Exception:
+                data = {"raw_text": response.text}
+
+            if is_ok:
+                logger.info(
+                    "✅ [KOMMO WEBHOOK] Webhook registrado com sucesso: %s | Eventos: %s",
+                    destination,
+                    settings,
+                )
+            else:
+                logger.warning(
+                    "❌ [KOMMO WEBHOOK] Falha ao criar webhook: status %s: %s",
+                    response.status_code,
+                    response.text,
+                )
+
+            return {
+                "ok": is_ok,
+                "status_code": response.status_code,
+                "destination": destination,
+                "settings": settings,
+                "data": data,
+            }
+    except Exception as exc:
+        logger.error("Erro ao criar webhook no Kommo: %s", exc)
+        return {"ok": False, "error": str(exc), "destination": destination}
+
+
+async def remover_webhook(destination: str) -> dict[str, Any]:
+    """Remove a inscrição do webhook para a URL de destino informada."""
+    token = _get_api_key()
+    if not token:
+        return {"ok": False, "error": "KOMMO_LONG_LIVED_TOKEN não configurado"}
+
+    url = f"{_api_v4_url()}/webhooks"
+    payload = {"destination": destination.strip()}
+
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.request("DELETE", url, json=payload, headers=_headers())
+            is_ok = response.status_code in (200, 201, 204)
+            try:
+                data = response.json()
+            except Exception:
+                data = {"raw_text": response.text}
+
+            if is_ok:
+                logger.info("🗑️ [KOMMO WEBHOOK] Webhook removido com sucesso: %s", destination)
+            else:
+                logger.warning(
+                    "Kommo remover_webhook status %s: %s",
+                    response.status_code,
+                    response.text,
+                )
+
+            return {
+                "ok": is_ok,
+                "status_code": response.status_code,
+                "destination": destination,
+                "data": data,
+            }
+    except Exception as exc:
+        logger.error("Erro ao remover webhook no Kommo: %s", exc)
+        return {"ok": False, "error": str(exc), "destination": destination}
+
+
+async def modificar_webhook_permissoes(
+    destination: str,
+    events: list[str],
+) -> dict[str, Any]:
+    """Modifica os eventos/permissões de um webhook existente.
+
+    Como a API v4 do Kommo não possui endpoint PATCH para webhooks,
+    executa a remoção e nova criação atômica com as novas configurações.
+    """
+    logger.info(
+        "🔄 [KOMMO WEBHOOK] Atualizando permissões do webhook %s para %s",
+        destination,
+        events,
+    )
+    del_res = await remover_webhook(destination)
+    create_res = await criar_webhook(destination, events=events)
+    return {
+        "ok": bool(create_res.get("ok", False)),
+        "destination": destination,
+        "events": events,
+        "remove_step": del_res,
+        "create_step": create_res,
+    }
+
+
+async def testar_ping_webhook(
+    destination: str,
+    timeout_s: float = 5.0,
+) -> dict[str, Any]:
+    """Dispara teste de conectividade HTTP POST contra o endpoint de destino.
+
+    Verifica se a aplicação local ou túnel responde adequadamente com código 200.
+    """
+    inicio = time.perf_counter()
+    try:
+        async with httpx.AsyncClient(timeout=timeout_s, verify=False) as client:
+            resp = await client.post(destination, json={})
+            latencia_ms = round((time.perf_counter() - inicio) * 1000, 2)
+            is_ok = resp.status_code == 200
+            return {
+                "ok": is_ok,
+                "status_code": resp.status_code,
+                "latency_ms": latencia_ms,
+                "body": resp.text[:200] if resp.text else "",
+            }
+    except Exception as exc:
+        latencia_ms = round((time.perf_counter() - inicio) * 1000, 2)
+        return {
+            "ok": False,
+            "status_code": None,
+            "latency_ms": latencia_ms,
+            "error": str(exc),
+        }
+
+
+async def garantir_webhook_ativo(
+    destination: str,
+    required_events: list[str] | None = None,
+) -> dict[str, Any]:
+    """Ciclo de auto-cura de webhook da Kommo.
+
+    1. Verifica se o webhook está cadastrado na Kommo.
+    2. Verifica se está ativo (disabled: false) e com os eventos exigidos.
+    3. Testa o ping HTTP no destino.
+    4. Se algo falhar, remove e recria com os eventos especificados.
+    5. Re-valida e retorna diagnóstico conclusivo.
+    """
+    alvo_eventos = set(required_events or DEFAULT_WEBHOOK_EVENTS)
+    destination_limpo = destination.strip()
+
+    existentes = await listar_webhooks(destination=destination_limpo)
+    webhook_atual = existentes[0] if existentes else None
+
+    precisa_reparar = False
+    motivo_reparo: list[str] = []
+
+    if not webhook_atual:
+        precisa_reparar = True
+        motivo_reparo.append("webhook_nao_encontrado_na_kommo")
+    else:
+        if webhook_atual.get("disabled", False) is True:
+            precisa_reparar = True
+            motivo_reparo.append("webhook_desativado_no_crm")
+
+        settings_atuais = set(webhook_atual.get("settings", []))
+        if not alvo_eventos.issubset(settings_atuais):
+            precisa_reparar = True
+            faltantes = list(alvo_eventos - settings_atuais)
+            motivo_reparo.append(f"eventos_faltantes_{faltantes}")
+
+    # Testa ping HTTP do endpoint
+    ping_status = await testar_ping_webhook(destination_limpo)
+    if not ping_status.get("ok"):
+        motivo_reparo.append(f"ping_falhou_status_{ping_status.get('status_code')}")
+        if not webhook_atual:
+            precisa_reparar = True
+
+    if not precisa_reparar and webhook_atual:
+        return {
+            "ok": True,
+            "status": "healthy",
+            "action": "none",
+            "destination": destination_limpo,
+            "events": webhook_atual.get("settings", []),
+            "webhook_id": webhook_atual.get("id"),
+            "disabled": webhook_atual.get("disabled", False),
+            "ping": ping_status,
+            "motivos": [],
+        }
+
+    # Auto-cura necessária: remove (se existia) e recria
+    logger.info(
+        "🛠️ [AUTO-CURA WEBHOOK] Reparando webhook %s. Motivos: %s",
+        destination_limpo,
+        motivo_reparo,
+    )
+    if webhook_atual:
+        await remover_webhook(destination_limpo)
+
+    create_res = await criar_webhook(destination_limpo, events=list(alvo_eventos))
+
+    # Re-checagem pós-criação
+    rechecagem_list = await listar_webhooks(destination=destination_limpo)
+    rechecagem_webhook = rechecagem_list[0] if rechecagem_list else None
+    ping_pos = await testar_ping_webhook(destination_limpo)
+
+    is_sucesso = bool(create_res.get("ok") and rechecagem_webhook and ping_pos.get("ok"))
+
+    return {
+        "ok": is_sucesso,
+        "status": "repaired" if is_sucesso else "warning",
+        "action": "recreated",
+        "destination": destination_limpo,
+        "events": list(alvo_eventos),
+        "motivos_reparo": motivo_reparo,
+        "create_step": create_res,
+        "webhook": rechecagem_webhook,
+        "ping": ping_pos,
+    }

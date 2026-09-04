@@ -197,6 +197,28 @@ class TemplateManager:
         """Alias para get_texto."""
         return self.get_texto(chave, fallback)
 
+    def get_template(self, name: str, fallback: str = "") -> str:
+        """Recupera o texto bruto do template pelo nome (alias para get_texto)."""
+        return self.get_texto(name, fallback)
+
+    def render(self, name: str, **kwargs: Any) -> str:
+        """Renderiza um template substituindo variáveis informadas."""
+        template = self.get_texto(name)
+        try:
+            return template.format(**kwargs)
+        except KeyError:
+            return template
+
+    def register_template(self, name: str, content: str) -> None:
+        """Registra ou sobrescreve um template customizado."""
+        if not self._loaded:
+            self.carregar_templates()
+        self._templates[name] = content
+
+    def list_templates(self) -> list[str]:
+        """Lista todos os nomes de templates registrados (alias para listar_chaves)."""
+        return self.listar_chaves()
+
     def listar_chaves(self) -> list[str]:
         """Lista todas as chaves disponíveis."""
         if not self._loaded:

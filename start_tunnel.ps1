@@ -12,7 +12,8 @@
 [CmdletBinding()]
 param(
     [int]$Port = 8000,
-    [string]$Domain = ""
+    [string]$Domain = "",
+    [switch]$SkipWebhookSync = $false
 )
 
 $ErrorActionPreference = "Stop"
@@ -233,10 +234,32 @@ if (-not $TunnelUrl) {
     Write-Host "Token de Webhook:  $WebhookSecret" -ForegroundColor Cyan
     Write-Host "----------------------------------------------------------------------" -ForegroundColor DarkGray
 
+    $WebhookTargetUrl = "$TunnelUrl/kommo/webhook?token=$WebhookSecret"
+
+    if (-not $SkipWebhookSync) {
+        Write-Host ""
+        Write-Host "======================================================================" -ForegroundColor Cyan
+        Write-Host " [AUTO-CURA] Sincronizacao e Verificacao do Webhook na Kommo CRM" -ForegroundColor Cyan
+        Write-Host "======================================================================" -ForegroundColor Cyan
+        Write-Host "Checando se o webhook esta inserido, com permissao 'add_message' e ativo..." -ForegroundColor Gray
+
+        $WebhookScript = Join-Path $ProjectRoot "scripts\gerenciar_webhook_kommo.py"
+        if (Test-Path $WebhookScript) {
+            & $PythonExe $WebhookScript --sync --url $WebhookTargetUrl --events "add_message"
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "[AUTO-CURA] Sincronizacao concluida: Webhook 100% operacional na Kommo!" -ForegroundColor Green
+            } else {
+                Write-Host "[AVISO] Falha ao sincronizar webhook automaticamente na Kommo CRM." -ForegroundColor Yellow
+                Write-Host "Verifique a chave KOMMO_LONG_LIVED_TOKEN ou permissoes de administrador." -ForegroundColor Gray
+            }
+        }
+        Write-Host "----------------------------------------------------------------------" -ForegroundColor DarkGray
+    }
+
     Write-Host ""
-    Write-Host "COPIE E COLE NA KOMMO (Configuracoes de Webhook / Integracoes):" -ForegroundColor Green
-    Write-Host "-> URL do Webhook da Kommo (Principal):" -ForegroundColor Yellow
-    Write-Host "   $TunnelUrl/kommo/webhook?token=$WebhookSecret" -ForegroundColor White
+    Write-Host "ENDPOINTS INTEGRADOS NA KOMMO CRM:" -ForegroundColor Green
+    Write-Host "-> URL do Webhook da Kommo (Principal - Sincronizado com 'add_message'):" -ForegroundColor Yellow
+    Write-Host "   $WebhookTargetUrl" -ForegroundColor White
 
     Write-Host ""
     Write-Host "-> URL do Webhook da Kommo (Alias alternativo):" -ForegroundColor Yellow

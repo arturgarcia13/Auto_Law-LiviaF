@@ -1,6 +1,6 @@
-# 🏗️ Plano de Reconstrução em Camadas: Auto_Law (Dra. Lívia França)
+﻿# 🏗️ Arquitetura em 4 Camadas: Auto_Law (Dra. Lívia França)
 
-Este documento detalha o plano arquitetural para reestruturar, testar e integrar a aplicação em **4 camadas independentes e modulares**, incorporando PostgreSQL para persistência e Langfuse para observabilidade completa.
+Este documento detalha a arquitetura em **4 camadas independentes e modulares** da aplicação, incorporando o **ChatOllama (Cluster AtLab/UFC)** para soberania de inteligência artificial, **Meta WhatsApp Cloud API** para mensageria oficial, **Kommo CRM** para gestão de vendas e **Persistência Híbrida SQLite/Postgres**.
 
 ---
 
@@ -8,170 +8,100 @@ Este documento detalha o plano arquitetural para reestruturar, testar e integrar
 
 ```mermaid
 graph TD
-    subgraph "Camada 4: Gateway & Webhooks (FastAPI)"
-        WH[POST /webhook/kommo]
+    subgraph "Camada 4: Gateway, Webhooks & Mensageria"
+        WH[POST /kommo/webhook]
+        ACK[Fast ACK < 50ms]
+        DEDUP[(SQLite Deduplicator)]
         BUF[Buffer de Rajadas WhatsApp]
-        ALW[Filtro Allowlist]
+        ALW[Filtro Allowlist ALLOWED_PHONES]
+        META[Meta WhatsApp Cloud API]
     end
 
-    subgraph "Camada 3: Orquestração LangGraph & Observabilidade"
+    subgraph "Camada 3: Orquestração LangGraph & Persistência"
         N1[Nó 1: Leads de Entrada]
         N2[Nó 2: Análise de Viabilidade]
         N3[Nó 3: Lead Qualificado]
         N4[Nó 4: Oferta de Contrato]
         N5[Nó 5: Envio de Contrato]
-        PG[(PostgreSQL Checkpointer)]
+        SQLITE[(AsyncSqliteSaver: data/checkpoints.sqlite)]
+        PG[(AsyncPostgresSaver / PostgreSQL)]
         LF[Langfuse Tracing & Metrics]
     end
 
-    subgraph "Camada 2: Inteligência Artificial (Google Gemini)"
-        LLM[Gemini Flash Lite]
-        PROMPT[System Prompt Dra. Lívia França]
-        EXTR[Extração Estruturada - 17 Campos]
+    subgraph "Camada 2: Inteligência Artificial Soberana & Áudio"
+        OLLAMA[ChatOllama: llama3.1:8b - Cluster UFC]
+        GEMINI_STT[Gemini Multimodal: Transcrição Áudio]
+        PROMPT[System Prompt Dra. Lívia França + Injeção Temporal]
+        EXTR[Extração Dinâmica dos 17 Campos]
     end
 
-    subgraph "Camada 1: Integração Kommo CRM"
-        PIPELINE[Pipelines & Status Funil]
-        CUSTOM[Campos Personalizados]
-        NOTES[Ficha Trabalhista na Timeline]
-        TASKS[Tarefas para Advogados]
-        MESSAGES[Talks / Chats API / Salesbot]
+    subgraph "Camada 1: Integração Kommo CRM (API v4)"
+        PIPELINE[Pipeline 14107071: 5 Etapas do Funil]
+        NOTES[Ficha Trabalhista na Timeline do Lead]
+        TASKS[Tarefas para Advogados no Handoff]
     end
 
-    WH --> BUF --> ALW --> N1
+    WH --> ACK
+    WH --> DEDUP --> BUF --> ALW --> N1
     N1 --> N2 --> N3 --> N4 --> N5
-    N1 & N2 & N3 & N4 & N5 <--> PG
+    N1 & N2 & N3 & N4 & N5 <--> SQLITE
+    SQLITE -.-> PG
     N1 & N2 & N3 & N4 & N5 -.-> LF
-    N2 <--> LLM
+    N2 <--> OLLAMA
     N2 <--> EXTR
+    BUF <--> GEMINI_STT
     N1 & N3 & N4 & N5 <--> PIPELINE & NOTES & TASKS
-    N2 & N4 & N5 --> MESSAGES
+    N2 & N4 & N5 --> META
 ```
 
 ---
 
 ## 📋 Detalhamento das 4 Camadas
 
-### 🔹 Camada 1: Exploração e Estruturação dos Endpoints do Kommo CRM
-**Objetivo**: Mapear, testar isoladamente e validar todas as chamadas HTTP para a API da Kommo com **acesso integral aos responses (JSON completo, sem qualquer truncamento ou corte)**.
+### 🔹 Camada 1: Integração Kommo CRM (API v4)
+**Objetivo**: Gestão do ciclo de vida do lead na pipeline de vendas trabalhistas, registro do dossiê comprobatório na timeline e atribuição de tarefas.
 
-1. **Endpoints de Estrutura do Funil & CRM**:
-   * `GET /api/v4/account`: Metadados da conta, subdomínio e ID.
-   * `GET /api/v4/leads/pipelines`: Listagem completa dos funis e IDs de todas as etapas existentes.
-   * `GET /api/v4/leads/custom_fields`: Mapeamento integral de todos os campos personalizados da conta.
-   * `POST /api/v4/leads` / `PATCH /api/v4/leads/{id}`: Criação e movimentação de Leads entre etapas.
-   * `POST /api/v4/leads/{id}/notes`: Inserção da Ficha de Qualificação Trabalhista na timeline.
-   * `POST /api/v4/tasks`: Criação de tarefa com prazo para os advogados.
-
-2. **Endpoints de Mensageria e Conversas**:
-   * `GET /api/v4/talks/{id}`: Leitura dos dados completos da conversa ativa.
-   * `POST /api/v4/talks/{id}/send_message`: Envio direto de mensagem para a conversa (Status `202 Accepted`).
-   * `POST https://amojo.kommo.com/v2/origin/custom/{scope_id}`: Chats API oficial com assinatura `HMAC-SHA1`, `Content-MD5` e `Date RFC2822`.
-   * Formatação da resposta síncrona JSON para o Salesbot.
-
-3. **Entregável da Camada 1**:
-   * Script CLI de diagnóstico e inspeção completa: `scripts/test_kommo_layer.py` (com saída formatada integral em terminal e salvamento em arquivo JSON completo para análise profunda).
-   * Módulo `integrations/kommo.py` totalmente modular, tipado e com tratamento de erros.
+1. **Estrutura do Funil & Pipelines**:
+   * Pipeline `14107071` (*FUNIL DE VENDAS*).
+   * 5 Etapas oficiais mapeadas: *Leads de Entrada (108897143) -> Análise de Viabilidade (108897147) -> Lead Qualificado (108897151) -> Oferta de Contrato (108897155) -> Envio do Contrato (108897159)*.
+2. **Timeline e Tarefas (`integrations/kommo.py`)**:
+   * `POST /api/v4/leads/{id}/notes`: Injeção da Ficha de Qualificação Trabalhista (17 campos) como nota oficial.
+   * `POST /api/v4/tasks`: Criação de tarefa vinculada com prioridade no handoff humano da Etapa 5.
 
 ---
 
-### 🔹 Camada 2: Inteligência Artificial (Google Gemini) & Extração Trabalhista
-**Objetivo**: Testar e garantir que o modelo responda no tom humanizado da Dra. Lívia França e extraia com precisão os 17 campos trabalhistas.
+### 🔹 Camada 2: Inteligência Artificial Soberana & Processamento de Voz
+**Objetivo**: Conduzir atendimento empático e investigação jurídica com privacidade total e compreensão multimodal.
 
-1. **Configuração do LLM**:
-   * Modelo: `gemini-3.5-flash-lite` (configurável via variável de ambiente `LLM_MODEL` no `.env`).
-   * Prompt do Sistema (`SYSTEM_PROMPT_LIVIA_FRANCA`):
-     * Acolhimento humanizado e empático (sem juridiquês).
-     * Investigação passo a passo (1 ou 2 perguntas curtas por mensagem).
-     * Parecer de viabilidade e benefício econômico.
-     * Proposta de honorários no êxito (30%).
-
-2. **Extração dos 17 Campos Trabalhistas**:
-   * `data_entrada`, `data_saida`, `funcao`, `salario`, `dias_trabalhados`, `dias_folga`, `horario_trabalho`, `intervalo`, `carteira_assinada`, `data_assinatura`, `insalubridade_periculosidade`, `horas_extras`, `comissao`, `beneficios`, `decimo_terceiro`, `ferias`, `fgts`, `filhos_menores`.
-   * Extração estruturada (Pydantic / Structured Output) para popular a ficha trabalhista.
-
-3. **Entregável da Camada 2**:
-   * Script CLI dedicado: `scripts/test_llm_layer.py` para testar perguntas, geração de diálogos e extração dos 17 campos com dados reais.
+1. **LLM Conversacional Soberano (ChatOllama)**:
+   * Instância de alta performance hospedada no cluster institucional AtLab/UFC (`https://cumbuco.ollama.atlab.ufc.br/ollama`).
+   * Modelo: **`llama3.1:8b`** com temperatura `0.4` e autenticação Bearer ([ADR-015](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-015-migracao-llm-gemini-para-ollama.md)).
+   * Injeção dinâmica de data/hora oficial de Brasília (`formatar_data_brasil()`) para rigor na contagem de prescrições trabalhistas.
+2. **Transcrição Multimodal de Áudio (STT)**:
+   * Download de mensagens de voz (`.ogg`/`.opus`) do WhatsApp e transcrição assíncrona com **Google Gemini Flash** ([ADR-009](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-009-processamento-audio-gemini-stt.md)).
+3. **Extração Dinâmica em Segundo Plano**:
+   * Preenchimento não intrusivo dos 17 campos da Ficha Trabalhista ao longo do diálogo, sem postura de interrogatório.
 
 ---
 
-### 🔹 Camada 3: Orquestrador de Estados LangGraph, PostgreSQL & Langfuse
-**Objetivo**: Gerenciar a máquina de estados do funil com persistência robusta em PostgreSQL, observabilidade completa via Langfuse e testes interativos via CLI.
+### 🔹 Camada 3: Orquestração LangGraph & Persistência de Memória
+**Objetivo**: Coordenação determinística de estados, roteamento condicional entre etapas e retenção perene do histórico.
 
-1. **Grafo de Estados (5 Nós)**:
-   * **Nó 1 (`leads_entrada`)**: Acolhe o lead e sincroniza no Kommo na etapa *Leads de Entrada*.
-   * **Nó 2 (`analise_viabilidade`)**: Conduz o diálogo com o cliente, acumula os fatos trabalhistas e avalia a viabilidade com o Gemini.
-   * **Nó 3 (`lead_qualificado`)**: Caso viável, registra a Ficha Trabalhista na timeline do Kommo e move o card no CRM.
-   * **Nó 4 (`oferta_contrato`)**: Explica honorários de êxito (30%) e obtém aceite do cliente.
-   * **Nó 5 (`envio_contrato`)**: Transbordo para geração do link ZapSign e criação de tarefa urgente para a equipe jurídica.
-
-2. **Persistência de Estado com PostgreSQL**:
-   * Utilização do `PostgresSaver` / `AsyncPostgresSaver` (`langgraph-checkpoint-postgres` / `psycopg`) para persistir o histórico e estado de cada `thread_id` no banco de dados.
-   * Suporte a fallback em memória (`MemorySaver`) caso a URL do PostgreSQL não esteja definida.
-
-3. **Observabilidade com Langfuse**:
-   * Integração de `CallbackHandler` do Langfuse nas chamadas do LangGraph e do Gemini.
-   * Rastreamento de:
-     * Traces de cada mensagem recebida.
-     * Latência de cada nó e da chamada LLM.
-     * Consumo de tokens (input/output) e custos.
-     * Versão de prompts e metadados de execução.
-
-4. **Entregável da Camada 3**:
-   * CLI Interativa `scripts/simular_conversa.py`: Permite que o operador converse com a Dra. Lívia pelo terminal, visualize o estado interno, a ficha preenchida em tempo real, a transição entre os nós e envie os traces para o Langfuse.
+1. **Grafo de Estados (`agent/graph.py` & `agent/nodes.py`)**:
+   * Nós assíncronos: `leads_entrada`, `analise_viabilidade`, `lead_qualificado`, `oferta_contrato`, `envio_contrato`.
+   * Acúmulo de mensagens via `Annotated[list[Any], add_messages]` ([ADR-014](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-014-memoria-langgraph-contexto-temporal.md)).
+2. **Persistência Híbrida**:
+   * **`AsyncSqliteSaver`**: Ativado por padrão em `data/checkpoints.sqlite` para desenvolvimento e execução ágil sem dependência de containers.
+   * **`AsyncPostgresSaver`**: Fallback/Produção configurável via `DATABASE_URL` ([ADR-004](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-004-persistencia-postgresql-database-isolada.md)).
 
 ---
 
-### 🔹 Camada 4: Gateway FastAPI & Integração de Ponta a Ponta
-**Objetivo**: Unir todas as camadas no servidor FastAPI de produção com suporte a Webhooks, Buffer Redis e Allowlist.
+### 🔹 Camada 4: Gateway, Webhooks & Mensageria WhatsApp
+**Objetivo**: Recepção de eventos com alta taxa de transferência, imunidade a retentativas de rede e disparo direto pela Meta Graph API.
 
-1. **Pipeline de Recepção**:
-   * `POST /webhook/kommo`: Recebe payload JSON ou Form-Urlencoded.
-   * Parser blindado (`_unflatten_form_data` imune a timestamps/índices gigantes).
-   * Filtro de Ambiente de Testes (`ALLOWED_CHAT_IDS`).
-   * Buffer de rajadas (`app/services/buffer.py`) para juntar mensagens consecutivas do WhatsApp.
-   * Invocação assíncrona do grafo LangGraph com rastreamento Langfuse.
-   * Disparo da resposta (Talks API + Resposta síncrona Webhook).
-
-2. **Entregável da Camada 4**:
-   * Suíte completa de testes automatizados com `pytest` (70+ testes unitários e de integração).
-   * Documentação de arquitetura atualizada.
-
----
-
-## 🛠️ Plano de Execução Passo a Passo
-
-```mermaid
-gantt
-    title Cronograma de Execução por Camadas
-    dateFormat  X
-    axisFormat %d
-    section Camada 1
-    Explorar endpoints Kommo (Responses integrais) : 0, 1
-    section Camada 2
-    Testar Gemini Flash Lite & Extração 17 Campos : 1, 2
-    section Camada 3
-    LangGraph + PostgreSQL Checkpointer + Langfuse : 2, 3
-    section Camada 4
-    Integrar Gateway FastAPI e testes E2E : 3, 4
-```
-
-1. **Passo 1 (Camada 1)**: Executar `scripts/test_kommo_layer.py` para inspecionar responses integrais da conta, pipelines, campos e conversas do Kommo.
-2. **Passo 2 (Camada 2)**: Executar `scripts/test_llm_layer.py` para validar o prompt da Dra. Lívia e a extração com `gemini-2.5-flash-lite`.
-3. **Passo 3 (Camada 3)**: Configurar o checkpointer PostgreSQL e Langfuse, executando a simulação interativa via CLI `scripts/simular_conversa.py`.
-4. **Passo 4 (Camada 4)**: Validar a integração no FastAPI e rodar os testes automatizados (`pytest`).
-
----
-
-## 🔍 Plano de Verificação
-
-### Testes Automatizados
-```powershell
-.\.venv\Scripts\pytest -v
-```
-
-### Verificação Manual por Camadas
-1. **Camada 1**: `python scripts/test_kommo_layer.py` (exibe JSON bruto e integral dos pipelines, campos e conversas da Kommo).
-2. **Camada 2**: `python scripts/test_llm_layer.py` (testa o modelo `gemini-2.5-flash-lite` e extração de 17 campos).
-3. **Camada 3**: `python scripts/simular_conversa.py` (simula diálogo completo com persistência PostgreSQL e envio de traces para o Langfuse).
-4. **Camada 4**: `python scripts/test_e2e_webhook.py` e disparo real no WhatsApp.
+1. **Fast ACK & Deduplicação (`app/routers/kommo.py`)**:
+   * Resposta HTTP 200 em menos de 50ms para evitar timeouts do servidor do Kommo ([ADR-013](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-013-deduplicacao-idempotencia-fast-ack.md)).
+   * Barreira de deduplicação `MessageDeduplicator` em SQLite WAL com TTL de 15 minutos.
+2. **Mensageria WhatsApp Oficial (`integrations/meta.py`)**:
+   * Disparos de texto e templates pela **Meta WhatsApp Cloud API** (Graph API v21.0/v26.0) ([ADR-011](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-011-gateway-whatsapp-meta-cloud-api.md)).
+   * Buffer assíncrono para agrupar mensagens fragmentadas enviadas em rajada pelo cliente no WhatsApp (`app/services/buffer.py`).
