@@ -138,11 +138,10 @@ $UvicornArgs = @(
     "--host", "0.0.0.0",
     "--port", "$Port",
     "--reload",
-    "--reload-exclude", "data/*",
-    "--reload-exclude", "docs/*",
-    "--reload-exclude", ".ngrok_*.log",
-    "--reload-exclude", "*.sqlite",
-    "--reload-exclude", "*.db"
+    "--reload-dir", "app",
+    "--reload-dir", "agent",
+    "--reload-dir", "integrations",
+    "--reload-dir", "scheduler"
 )
 $UvicornProcess = Start-Process -FilePath $PythonExe `
     -ArgumentList $UvicornArgs `

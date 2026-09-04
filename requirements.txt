@@ -15,8 +15,9 @@ langgraph>=0.2.0
 langchain>=0.3.0
 langchain-core>=0.3.0
 langchain-google-genai>=2.0.0
+langchain-ollama>=1.1.0
 langgraph-checkpoint-postgres>=2.0.0
-psycopg[pool]>=3.2.0
+psycopg[binary,pool]>=3.2.0
 
 # ========================================
 # Observabilidade & Tracing

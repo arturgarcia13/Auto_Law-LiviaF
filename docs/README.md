@@ -91,4 +91,9 @@ Para entender o racional técnico por trás de cada escolha do projeto, consulte
 8. **[ADR-008](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-008-gateway-kommo-chats.md)**: Gateway WhatsApp via API de Conversas do Kommo CRM.
 9. **[ADR-009](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-009-processamento-audio-gemini-stt.md)**: Transcrição de Áudio via Google Gemini Multimodal STT.
 10. **[ADR-010](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-010-lista-permissao-ambiente-testes-allowed-chat-ids.md)**: Lista de Permissão em Ambientes de Teste (`ALLOWED_CHAT_IDS`).
+11. **[ADR-011](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-011-gateway-whatsapp-meta-cloud-api.md)**: Gateway WhatsApp via Meta Cloud API e Kommo CRM.
+12. **[ADR-012](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-012-tunel-estatico-ngrok.md)**: Túnel de Desenvolvimento Seguro com Domínio Estático Ngrok.
+13. **[ADR-013](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-013-deduplicacao-idempotencia-fast-ack.md)**: Deduplicação de Mensagens (Idempotência) e Fast ACK para Webhooks.
+14. **[ADR-014](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-014-memoria-langgraph-contexto-temporal.md)**: Persistência de Memória Conversacional e Injeção de Contexto Temporal.
+15. **[ADR-015](file:///C:/Users/ATLAB-USUARIO.DESKTOP-P2H460F/Documents/PROJECTS/Auto_Law-LiviaF/docs/adr/ADR-015-migracao-llm-gemini-para-ollama.md)**: Migração da Camada Conversacional para ChatOllama (Cluster AtLab UFC).
 

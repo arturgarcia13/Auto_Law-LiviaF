@@ -9,6 +9,7 @@ from typing import Any
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 
 from agent.prompts import SYSTEM_PROMPT_LIVIA_FRANCA
 from agent.state import (
@@ -72,6 +73,41 @@ def _get_gemini_client() -> genai.Client | None:
         return None
 
 
+def _build_chat_model() -> Any | None:
+    """Instancia o modelo ChatOllama conectado ao cluster institucional com autenticação Bearer."""
+    base_url = (os.getenv("OLLAMA_BASE_URL") or "").strip()
+    api_key = (os.getenv("OLLAMA_API_KEY") or "").strip()
+    model_name = (os.getenv("OLLAMA_MODEL") or "llama3.1:8b").strip()
+    temperature = float(os.getenv("OLLAMA_TEMPERATURE", "0.4"))
+    top_k = int(os.getenv("OLLAMA_TOP_K", "40"))
+    keep_alive = os.getenv("OLLAMA_KEEP_ALIVE", "10m").strip()
+
+    if not base_url:
+        return None
+
+    headers: dict[str, str] = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    }
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+
+    try:
+        from langchain_ollama import ChatOllama
+
+        return ChatOllama(
+            model=model_name,
+            base_url=base_url,
+            temperature=temperature,
+            top_k=top_k,
+            keep_alive=keep_alive,
+            client_kwargs={"headers": headers},
+        )
+    except Exception as exc:
+        logger.warning("Falha ao inicializar ChatOllama: %s", exc)
+        return None
+
+
 async def leads_entrada_node(state: LeadState) -> dict[str, Any]:
     """Nó 1: Leads de Entrada.
 
@@ -113,65 +149,91 @@ async def analise_viabilidade_node(state: LeadState) -> dict[str, Any]:
     motivo_inviavel = state.get("motivo_inviabilidade")
     messages = list(state.get("messages", []))
 
-    # Constrói o histórico para a API do Gemini
-    historico_conteudos: list[types.Content] = []
-    for msg in messages:
-        if isinstance(msg, dict):
-            r = msg.get("role", "user")
-            c = str(msg.get("content", ""))
-        else:
-            r = getattr(msg, "type", "user")
-            c = getattr(msg, "content", str(msg))
+    agora_str = formatar_data_brasil()
+    instrucao_sistema = (
+        f"{SYSTEM_PROMPT_LIVIA_FRANCA}\n\n"
+        f"================================================================================\n"
+        f"INFORMAÇÃO TEMPORAL ATUAL & REGRAS DE PLACEHOLDERS (CRÍTICO)\n"
+        f"================================================================================\n"
+        f"Data e hora atual no Brasil: {agora_str}.\n\n"
+        f"REGRAS OBRIGATÓRIAS:\n"
+        f"1. É TERMINANTEMENTE PROIBIDO emitir placeholders entre colchetes, como "
+        f"'[inserir data de hoje]', '[data]', '[horário]' ou quaisquer colchetes [ ].\n"
+        f"2. Utilize sempre a data e horário reais informados ({agora_str}) para "
+        f"análise de prazos, prescrição ou menções temporais ao cliente.\n"
+        f"3. Responda com a mensagem definitiva, completa, suscinta e pronta para envio ao cliente.\n"
+        f"SEJA SUSCINTO, CLARO E DIRETO. EVITE MENSAGENS LONGAS."
+    )
 
-        gemini_role = "user" if r in ("user", "human") else "model"
-        historico_conteudos.append(
-            types.Content(
-                role=gemini_role,
-                parts=[types.Part.from_text(text=c)],
-            )
-        )
-
-    # Invocação do Google Gemini Flash
-    client = _get_gemini_client()
     resposta_texto = ""
-    if client and historico_conteudos:
+    chat_model = _build_chat_model()
+
+    if chat_model and messages:
         try:
+            prompt_messages: list[BaseMessage] = [SystemMessage(content=instrucao_sistema)]
+            for msg in messages:
+                if isinstance(msg, dict):
+                    r = msg.get("role", "user")
+                    c = str(msg.get("content", ""))
+                else:
+                    r = getattr(msg, "type", "user")
+                    c = getattr(msg, "content", str(msg))
+
+                if r in ("user", "human"):
+                    prompt_messages.append(HumanMessage(content=c))
+                elif r in ("assistant", "ai", "model"):
+                    prompt_messages.append(AIMessage(content=c))
+                elif r == "system":
+                    prompt_messages.append(SystemMessage(content=c))
+
             logger.info(
-                "🤖 [CHAMANDO GEMINI FLASH] Enviando histórico de %d mensagens...",
-                len(historico_conteudos),
+                "🤖 [CHAMANDO OLLAMA: %s] Enviando histórico de %d mensagens...",
+                getattr(chat_model, "model", "ollama"),
+                len(prompt_messages),
             )
-            agora_str = formatar_data_brasil()
-            instrucao_sistema = (
-                f"{SYSTEM_PROMPT_LIVIA_FRANCA}\n\n"
-                f"================================================================================\n"
-                f"INFORMAÇÃO TEMPORAL ATUAL & REGRAS DE PLACEHOLDERS (CRÍTICO)\n"
-                f"================================================================================\n"
-                f"Data e hora atual no Brasil: {agora_str}.\n\n"
-                f"REGRAS OBRIGATÓRIAS:\n"
-                f"1. É TERMINANTEMENTE PROIBIDO emitir placeholders entre colchetes, como "
-                f"'[inserir data de hoje]', '[data]', '[horário]' ou quaisquer colchetes [ ].\n"
-                f"2. Utilize sempre a data e horário reais informados ({agora_str}) para "
-                f"análise de prazos, prescrição ou menções temporais ao cliente.\n"
-                f"3. Responda com a mensagem definitiva, completa e pronta para envio ao cliente."
-            )
-            config = types.GenerateContentConfig(
-                system_instruction=instrucao_sistema,
-                temperature=0.4,
-            )
-            model_name = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
-            response = client.models.generate_content(
-                model=model_name,
-                contents=historico_conteudos,
-                config=config,
-            )
-            if response and response.text:
-                resposta_texto = response.text.strip()
-                logger.info("✅ [GEMINI RESPOSTA GERADA]: '%s'", resposta_texto)
+            ai_response = await chat_model.ainvoke(prompt_messages)
+            if ai_response and ai_response.content:
+                resposta_texto = str(ai_response.content).strip()
+                logger.info("✅ [OLLAMA RESPOSTA GERADA]: '%s'", resposta_texto)
         except Exception as exc:
-            logger.error("❌ [GEMINI ERRO]: %s", exc)
+            logger.error("❌ [OLLAMA ERRO]: %s", exc)
+
+    # Fallback secundário para Gemini se Ollama não responder e Gemini estiver configurado
+    if not resposta_texto:
+        gemini_client = _get_gemini_client()
+        if gemini_client and messages:
+            try:
+                historico_gemini: list[types.Content] = []
+                for msg in messages:
+                    if isinstance(msg, dict):
+                        r = msg.get("role", "user")
+                        c = str(msg.get("content", ""))
+                    else:
+                        r = getattr(msg, "type", "user")
+                        c = getattr(msg, "content", str(msg))
+                    g_role = "user" if r in ("user", "human") else "model"
+                    historico_gemini.append(
+                        types.Content(role=g_role, parts=[types.Part.from_text(text=c)])
+                    )
+
+                config = types.GenerateContentConfig(
+                    system_instruction=instrucao_sistema,
+                    temperature=0.4,
+                )
+                m_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite").strip()
+                resp = gemini_client.models.generate_content(
+                    model=m_name,
+                    contents=historico_gemini,
+                    config=config,
+                )
+                if resp and resp.text:
+                    resposta_texto = resp.text.strip()
+                    logger.info("✅ [GEMINI FALLBACK RESPOSTA GERADA]: '%s'", resposta_texto)
+            except Exception as exc:
+                logger.error("❌ [GEMINI ERRO]: %s", exc)
 
     if not resposta_texto:
-        # Resposta amigável padrão se Gemini estiver offline ou sem chave
+        # Resposta amigável padrão se LLM estiver offline ou sem chave
         resposta_texto = (
             "Olá! Tudo bem? Aqui é do escritório trabalhista da Dra. Lívia França. "
             "Para que possamos te orientar da melhor forma, me explique melhor: "
